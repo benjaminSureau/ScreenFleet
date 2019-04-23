@@ -1,4 +1,8 @@
-//const router = require('express').Router();
+const router = require('express').Router();
+const CompositionController = require('./core/CompositionController');
+const ModuleController = require('./core/ModuleController');
+const ResourceController = require('./core/ResourceController');
+const TvController = require('./core/TvController');
 
 /*router.get('/', (req, res) => {
     res.json({
@@ -10,17 +14,23 @@
 
 //const objectController = require('./core/objectController');
 
-/*router
-    .route('/objects/')
-    .post(objectController.create)
-    .get(objectController.getAll);
-    //.put(objectController.updateAll)
-    //.delete(objectController.deleteAll);*/
+router
+    .route('/compositions/')
+    .post(CompositionController.create)
+    .get(CompositionController.getAll);
 
-/*router
-    .route('/objects/:objectId');
-    .get(objectController.getById)
-    .put(objectController.updateById)
-    .delete(objectController.deleteById);*/
+router
+    .route('/modules/')
+    .post(ModuleController.create)
+    .get(ModuleController.getById);
 
+router
+    .route('/resources/')
+    .post(ResourceController.create)
+    .get(ResourceController.getById);
+
+router
+    .route('/TVs/')
+    .post(TvController.create)
+    .get(TvController.getById);
 
