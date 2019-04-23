@@ -3,7 +3,7 @@ const ModuleService = require('../../services/core/ModuleService');
 
 
 function create(req, res) {
-    if (req.type != null && req.mode != null && req.numberOfSlides != null && res.splitMode != null) {
+    if (req.body.type != null && req.body.mode != null && req.body.numberOfSlides != null && req.body.splitMode != null) {
         let module = ModuleService.addModule(req);
         res.status(201).send({module: module});
     } else {

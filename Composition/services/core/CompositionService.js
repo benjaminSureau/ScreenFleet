@@ -1,12 +1,10 @@
 const Composition = require('../../models/core/Compositions');
 
-function addComposition(params) {
-    return (new Promise((resolve, reject) => {
-        if(params.test) {
-            resolve({status: 'OK'});
-        }
-        reject({status: 'KO'});
-    }));
+function addComposition() {
+    let composition = new Composition();
+    composition.save().then(function () {
+        return composition;
+    });
 }
 
 module.exports = {
