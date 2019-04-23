@@ -10,7 +10,7 @@ const splitModeEnum = {HORIZONTAL:'horizontal', VERTICAL:'vertical'};
 const moduleSchema = new mongoose.Schema({
     type: typeEnum,
     mode: modeEnum,
-    numberOfSlides: String,
+    numberOfSlides: Number,
     splitMode: splitModeEnum,
     nextModuleId: ObjectId
 });
