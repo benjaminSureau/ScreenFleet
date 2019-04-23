@@ -19,6 +19,17 @@ function getAvailablePort() {
     });
 }
 
+function getAll() {
+    Tv.find({}, function (error, Tvs) {
+        if(error) {
+            return null;
+        }
+        return Tvs;
+    });
+}
+
+
 module.exports = {
-    addTv
+    addTv,
+    getAll
 };

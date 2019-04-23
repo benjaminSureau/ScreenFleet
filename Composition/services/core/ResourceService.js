@@ -8,6 +8,16 @@ function addResource(params) {
     });
 }
 
+function getAll() {
+    Resource.find({}, function (error, resources) {
+        if(error) {
+            return null;
+        }
+        return resources;
+    });
+}
+
 module.exports = {
-    addResource
+    addResource,
+    getAll
 };

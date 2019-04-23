@@ -12,6 +12,16 @@ function addModule(params) {
     });
 }
 
+function getAll() {
+    Module.find({}, function (error, modules) {
+        if(error) {
+            return null;
+        }
+        return modules;
+    });
+}
+
 module.exports = {
-    addModule
+    addModule,
+    getAll
 };

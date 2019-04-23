@@ -7,6 +7,16 @@ function addComposition() {
     });
 }
 
+function getAll() {
+    Composition.find({}, function (error, compositions) {
+        if(error) {
+            return null;
+        }
+        return compositions;
+    });
+}
+
 module.exports = {
-    addComposition
+    addComposition,
+    getAll
 };
