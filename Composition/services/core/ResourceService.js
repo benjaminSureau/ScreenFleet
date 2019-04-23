@@ -1,6 +1,6 @@
 const Resource = require('../../models/core/Resources');
 
-function addModule(params) {
+function addResource(params) {
     return (new Promise((resolve, reject) => {
         if(params.test) {
             resolve({status: 'OK'});
@@ -10,5 +10,5 @@ function addModule(params) {
 }
 
 module.exports = {
-    addModule
+    addResource
 };

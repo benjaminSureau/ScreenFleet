@@ -1,4 +1,4 @@
-const Object = require('../../models/core/Modules');
+const Module = require('../../models/core/Modules');
 
 function addModule(params) {
     return (new Promise((resolve, reject) => {

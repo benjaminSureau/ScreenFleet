@@ -1,6 +1,6 @@
 const Tv = require('../../models/core/TVs');
 
-function addModule(params) {
+function addTv(params) {
     return (new Promise((resolve, reject) => {
         if(params.test) {
             resolve({status: 'OK'});
@@ -10,5 +10,5 @@ function addModule(params) {
 }
 
 module.exports = {
-    addModule
+    addTv
 };
