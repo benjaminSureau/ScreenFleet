@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const modules = require('./Modules.js').schema;
 let ObjectId = mongoose.Schema.Types.ObjectId;
 
 // declare enumerations
@@ -15,4 +14,4 @@ const moduleSchema = new mongoose.Schema({
     nextModuleId: ObjectId
 });
 
-modules.exports = mongoose.model('Modules', moduleSchema);
+module.exports = mongoose.model('Modules', moduleSchema);
