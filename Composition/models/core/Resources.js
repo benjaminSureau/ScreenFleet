@@ -4,4 +4,4 @@ const resourceSchema = new mongoose.Schema({
     multimediaLink: [String]
 });
 
-module.exports = mongoose.model("Resources", resourceSchema);
+module.exports = mongoose.model('Resources', resourceSchema);

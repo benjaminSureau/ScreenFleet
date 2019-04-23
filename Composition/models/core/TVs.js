@@ -6,4 +6,4 @@ const tvSchema = new mongoose.Schema({
     compositionId: ObjectId
 });
 
-module.exports = mongoose.model("tvs", tvSchema);
+module.exports = mongoose.model('tvs', tvSchema);
