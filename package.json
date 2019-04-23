@@ -5,6 +5,7 @@
   "author": "ben sureau <sureau117@gmail.com>",
   "private": true,
   "scripts": {
+    "lint": "./node_modules/.bin/eslint src/components/*.vue src/router/*.js src/*.js src/*.vue",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
@@ -36,6 +37,8 @@
     "cross-env": "^5.0.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^2.1.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.2.2",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
