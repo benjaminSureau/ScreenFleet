@@ -1,12 +1,22 @@
 const Tv = require('../../models/core/TVs');
+const axios = require('axios');
 
-function addTv(params) {
-    return (new Promise((resolve, reject) => {
-        if(params.test) {
-            resolve({status: 'OK'});
-        }
-        reject({status: 'KO'});
-    }));
+function addTv() {
+    let tv = new Tv();
+    tv.port = getAvailablePort();
+    tv.save().then(function () {
+        return tv;
+    });
+}
+
+function getAvailablePort() {
+    axios({
+        method:'get',
+        url:'localhost:3001/tvs/newPort/',
+        responseType:'Number'
+    }).then (function (res) {
+        return res;
+    });
 }
 
 module.exports = {
