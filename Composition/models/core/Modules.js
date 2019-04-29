@@ -7,10 +7,10 @@ const modeEnum = {SPLIT_VIEW:'split_view', SLIDE_VIEW:'slide_view', VIDEO:'video
 const splitModeEnum = {HORIZONTAL:'horizontal', VERTICAL:'vertical'};
 
 const moduleSchema = new mongoose.Schema({
-    type: typeEnum,
-    mode: modeEnum,
+    type: String,
+    mode: String,
     numberOfSlides: Number,
-    splitMode: splitModeEnum,
+    splitMode: String,
     nextModuleId: ObjectId
 });
 
