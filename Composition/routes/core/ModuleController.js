@@ -25,7 +25,33 @@ function getAll(req, res) {
         });
 }
 
+function update(req, res) {
+
+}
+
+function getById(req, res) {
+    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        ModuleService.getModule(req.params.id)
+            .then(function(module){
+                if(module == null || typeof module == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({composition: module});
+                }})
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
+}
+
+function remove(req, res) {
+
+}
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    update,
+    getById,
+    remove
 };

@@ -1,4 +1,5 @@
 const ResourceService = require('../../services/core/ResourceService');
+const mongoose = require('mongoose');
 
 function create(req, res) {
     if (req.body.multimediaLink != null && req.body.multimediaLink.length !== 0) {
@@ -23,7 +24,33 @@ function getAll(req, res) {
         });
 }
 
+function update(req, res) {
+
+}
+
+function getById(req, res) {
+    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        ResourceService.getResource(req.params.id)
+            .then(function(resource){
+                if(resource == null || typeof resource == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({composition: resource});
+                }})
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
+}
+
+function remove(req, res) {
+
+}
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    update,
+    getById,
+    remove
 };

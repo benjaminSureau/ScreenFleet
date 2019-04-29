@@ -21,9 +21,21 @@ router
     .get(CompositionController.getAll);
 
 router
+    .route('/compositions/:id')
+    .put(CompositionController.update)
+    .delete(CompositionController.remove)
+    .get(CompositionController.getById);
+
+router
     .route('/modules/')
     .post(ModuleController.create)
     .get(ModuleController.getAll);
+
+router
+    .route('/modules/:id')
+    .put(ModuleController.update)
+    .delete(ModuleController.remove)
+    .get(ModuleController.getById);
 
 router
     .route('/resources/')
@@ -31,8 +43,20 @@ router
     .get(ResourceController.getAll);
 
 router
+    .route('/resources/:id')
+    .put(ResourceController.update)
+    .delete(ResourceController.remove)
+    .get(ResourceController.getById);
+
+router
     .route('/TVs/')
     .post(TvController.create)
     .get(TvController.getAll);
+
+router
+    .route('/TVs/:id')
+    .put(TvController.update)
+    .delete(TvController.remove)
+    .get(TvController.getById);
 
 module.exports = router;

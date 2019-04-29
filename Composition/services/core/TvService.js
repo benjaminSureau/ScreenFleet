@@ -33,8 +33,20 @@ function getAll() {
     }));
 }
 
+function getTv(id){
+    return new Promise(((resolve, reject) => {
+        Tv.findById(id, function(error, tv) {
+            if(error) {
+                reject(null);
+            }
+            resolve({tv});
+        });
+    }));
+}
+
 
 module.exports = {
     addTv,
-    getAll
+    getAll,
+    getTv
 };

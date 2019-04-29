@@ -19,7 +19,19 @@ function getAll() {
     }));
 }
 
+function getResource(id){
+    return new Promise(((resolve, reject) => {
+        Resource.findById(id, function(error, resource) {
+            if(error) {
+                reject(null);
+            }
+            resolve({resource});
+        });
+    }));
+}
+
 module.exports = {
     addResource,
-    getAll
+    getAll,
+    getResource
 };

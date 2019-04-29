@@ -25,7 +25,19 @@ function getAll() {
     }));
 }
 
+function getModule(id){
+    return new Promise(((resolve, reject) => {
+        Module.findById(id, function(error, module) {
+            if(error) {
+                reject(null);
+            }
+            resolve({module});
+        });
+    }));
+}
+
 module.exports = {
     addModule,
-    getAll
+    getAll,
+    getModule
 };
