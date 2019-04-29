@@ -1,5 +1,5 @@
 const Tv = require('../../models/core/TVs');
-const axios = require('axios');
+//const axios = require('axios');
 const mongoose = require('mongoose');
 
 function addTv(params) {

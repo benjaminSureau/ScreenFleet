@@ -1,4 +1,3 @@
-const Composition = require('../../models/core/Compositions');
 const CompositionService = require('../../services/core/CompositionService');
 
 function create(req, res) {
@@ -20,7 +19,7 @@ function getAll(req, res) {
             }
         })
         .catch((error) => {
-            return res.sendStatus(400);
+            return res.sendStatus(400).json({error:error});
         });
 }
 

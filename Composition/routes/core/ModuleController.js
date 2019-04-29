@@ -1,4 +1,3 @@
-const Module = require('../../models/core/Modules');
 const ModuleService = require('../../services/core/ModuleService');
 const mongoose = require('mongoose');
 
@@ -22,7 +21,7 @@ function getAll(req, res) {
             }
         })
         .catch((error) => {
-            return res.sendStatus(400);
+            return res.sendStatus(400).json({error:error});
         });
 }
 

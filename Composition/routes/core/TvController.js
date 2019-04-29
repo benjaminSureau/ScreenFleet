@@ -1,4 +1,3 @@
-const Tv = require('../../models/core/TVs');
 const TvService = require('../../services/core/TvService');
 const mongoose = require('mongoose');
 
@@ -21,7 +20,7 @@ function getAll(req, res) {
             }
         })
         .catch((error) => {
-            return res.sendStatus(400);
+            return res.sendStatus(400).json({error:error});
         });
 }
 
