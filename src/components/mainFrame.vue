@@ -1,48 +1,14 @@
 <template>
     <div id="app">
-        <menuBar></menuBar>
+        <menu-bar></menu-bar>
         <v-app id="inspire">
             <v-layout row wrap>
                 <v-flex pa-1 xs6>
-                    <v-card>
-                        <v-img
-                            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
-                            aspect-ratio="3"
-                        ></v-img>
-
-                        <v-card-title primary-title>
-                            <div>
-                                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                                <div> {{ card_text }} </div>
-                            </div>
-                        </v-card-title>
-
-                        <v-card-actions>
-                            <v-btn flat color="orange">Share</v-btn>
-                            <v-btn flat color="orange">Explore</v-btn>
-                        </v-card-actions>
-                    </v-card>
+                    <composition-frame></composition-frame>
                 </v-flex>
 
                 <v-flex pa-1 xs6>
-                    <v-card>
-                        <v-img
-                            src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
-                            aspect-ratio="3"
-                        ></v-img>
-
-                        <v-card-title primary-title>
-                            <div>
-                                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                                <div> {{ card_text }} </div>
-                            </div>
-                        </v-card-title>
-
-                        <v-card-actions>
-                            <v-btn flat color="orange">Share</v-btn>
-                            <v-btn flat color="orange">Explore</v-btn>
-                        </v-card-actions>
-                    </v-card>
+                    <tv-frame></tv-frame>
                 </v-flex>
             </v-layout>
         </v-app>
@@ -50,10 +16,15 @@
 </template>
 
 <script>
-    import MenuBar from './menuBar.vue'
+    import MenuBar from '@/components/menuBar'
+    import CompositionFrame from '@/components/compositionFrame'
+    import TvFrame from '@/components/tvFrame';
+
     export default {
         components : {
-            'menuBar': MenuBar
+            TvFrame,
+            MenuBar,
+            CompositionFrame
         },
         data () {
             return {

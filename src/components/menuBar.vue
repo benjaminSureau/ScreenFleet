@@ -1,7 +1,8 @@
 <template>
-    <v-toolbar>
-        <v-toolbar-side-icon></v-toolbar-side-icon>
-        <v-toolbar-title>Title</v-toolbar-title>
+    <v-toolbar :dark=true>
+        <v-toolbar-side-icon>
+            <v-icon x-large>home</v-icon>
+        </v-toolbar-side-icon>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat>Link One</v-btn>
