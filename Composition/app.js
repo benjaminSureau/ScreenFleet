@@ -30,12 +30,8 @@ app.use((req, res, next) => {
 });
 
 // ------ Routes ------
-app.get('/api', function (req, res, next) {
-    next('./routes/api');
-});
-app.post('/api', function (req, res, next) {
-    next('./routes/api');
-});
+app.use('/api', require('./routes/index'));
+
 // ------ Start web server ------
 const port = 3000;
 app.listen(port, () => {

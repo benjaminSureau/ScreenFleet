@@ -2,19 +2,21 @@ const Resource = require('../../models/core/Resources');
 
 function addResource(params) {
     let resource = new Resource();
-    resource.multimediaLink = params.body.multimediaLink;
+    resource.multimediaLink = params.multimediaLink;
     resource.save().then(function () {
         return resource;
     });
 }
 
 function getAll() {
-    Resource.find({}, function (error, resources) {
-        if(error) {
-            return null;
-        }
-        return resources;
-    });
+    return new Promise(((resolve, reject) => {
+        Resource.find({}, function (error, resources) {
+            if(error) {
+                reject(null);
+            }
+            resolve({resources});
+        });
+    }));
 }
 
 module.exports = {

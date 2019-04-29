@@ -1,4 +1,5 @@
 const Module = require('../../models/core/Modules');
+const mongoose = require('mongoose');
 
 function addModule(params) {
     let module = new Module();
@@ -6,19 +7,22 @@ function addModule(params) {
     module.mode = params.mode;
     module.numberOfSlides = params.numberOfSlides;
     module.splitMode = params.splitMode;
-    module.nextModuleId = params.nextModuleId;
+    module.resources = params.resources;
+    module.nextModuleId = mongoose.Types.ObjectId(params.nextModuleId);
     module.save().then(function () {
         return module;
     });
 }
 
 function getAll() {
-    Module.find({}, function (error, modules) {
-        if(error) {
-            return null;
-        }
-        return modules;
-    });
+    return new Promise(((resolve, reject) => {
+        Module.find({}, function (error, modules) {
+            if(error) {
+                reject(null);
+            }
+            resolve({modules});
+        });
+    }));
 }
 
 module.exports = {

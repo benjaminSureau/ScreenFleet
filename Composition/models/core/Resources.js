@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const resourceSchema = new mongoose.Schema({
-    multimediaLink: [String]
+    multimediaLink: String
 });
 
-module.exports = mongoose.model('Resources', resourceSchema);
+module.exports = mongoose.model('Resources', resourceSchema, 'Resources');

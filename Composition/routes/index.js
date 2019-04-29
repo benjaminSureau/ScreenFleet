@@ -5,11 +5,11 @@ const ModuleController = require('./core/ModuleController');
 const ResourceController = require('./core/ResourceController');
 const TvController = require('./core/TvController');
 
-/*router.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.json({
         status: 'OK',
     });
-});*/
+});
 
 // ------ Object controller ------
 
@@ -17,37 +17,22 @@ const TvController = require('./core/TvController');
 
 router
     .route('/compositions/')
-    .post(function(){
-        CompositionController.create();
-    })
-    .get(function(){
-        CompositionController.getAll();
-    });
+    .post(CompositionController.create)
+    .get(CompositionController.getAll);
 
 router
     .route('/modules/')
-    .post(function(){
-        ModuleController.create();
-    })
-    .get(function(){
-        ModuleController.getAll();
-    });
+    .post(ModuleController.create)
+    .get(ModuleController.getAll);
 
 router
     .route('/resources/')
-    .post(function(){
-        ResourceController.create();
-    })
-    .get(function(){
-        ResourceController.getAll();
-    });
+    .post(ResourceController.create)
+    .get(ResourceController.getAll);
 
 router
     .route('/TVs/')
-    .post(function(){
-        TvController.create();
-    })
-    .get(function(){
-        TvController.getAll();
-    });
+    .post(TvController.create)
+    .get(TvController.getAll);
 
+module.exports = router;

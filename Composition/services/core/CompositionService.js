@@ -1,6 +1,6 @@
 const Composition = require('../../models/core/Compositions');
 
-function addComposition() {
+function addComposition(params) {
     let composition = new Composition();
     composition.save().then(function () {
         return composition;
@@ -8,12 +8,14 @@ function addComposition() {
 }
 
 function getAll() {
-    Composition.find({}, function (error, compositions) {
-        if(error) {
-            return null;
-        }
-        return compositions;
-    });
+    return new Promise(((resolve, reject) => {
+        Composition.find({}, function (error, compositions) {
+            if(error) {
+                reject(null);
+            }
+            resolve({compositions});
+        });
+    }));
 }
 
 module.exports = {

@@ -1,31 +1,36 @@
 const Tv = require('../../models/core/TVs');
 const axios = require('axios');
+const mongoose = require('mongoose');
 
-function addTv() {
+function addTv(params) {
     let tv = new Tv();
     tv.port = getAvailablePort();
+    tv.compositionId = mongoose.Types.ObjectId(params.compositionId);
     tv.save().then(function () {
         return tv;
     });
 }
 
 function getAvailablePort() {
-    axios({
+    /*axios({
         method:'get',
         url:'localhost:3001/tvs/newPort/',
         responseType:'Number'
     }).then (function (res) {
         return res;
-    });
+    });*/
+    return 3001;
 }
 
 function getAll() {
-    Tv.find({}, function (error, Tvs) {
-        if(error) {
-            return null;
-        }
-        return Tvs;
-    });
+    return new Promise(((resolve, reject) => {
+        Tv.find({}, function (error, tvs) {
+            if(error) {
+                reject(null);
+            }
+            resolve({tvs});
+        });
+    }));
 }
 
 
