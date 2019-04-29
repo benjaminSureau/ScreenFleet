@@ -4,11 +4,11 @@
         <v-app id="inspire">
             <v-layout row wrap>
                 <v-flex pa-1 xs6>
-                    <composition-frame></composition-frame>
-                </v-flex>
+                    <composition-frame/>
 
+                </v-flex>
                 <v-flex pa-1 xs6>
-                    <tv-frame></tv-frame>
+                    <tv-frame/>
                 </v-flex>
             </v-layout>
         </v-app>
@@ -16,19 +16,67 @@
 </template>
 
 <script>
-    import MenuBar from '@/components/menuBar'
-    import CompositionFrame from '@/components/compositionFrame'
-    import TvFrame from '@/components/tvFrame';
-
+    import draggable from "vuedraggable";
+    import MenuBar from './menuBar.vue'
+    import CompositionFrame from "./compositionFrame";
+    import TvFrame from "./tvFrame";
     export default {
         components : {
             TvFrame,
-            MenuBar,
-            CompositionFrame
+            CompositionFrame,
+            'menuBar': MenuBar,
+            draggable,
         },
-        data () {
+        data() {
             return {
-            card_text: 'Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat.'
+                list: message.map((name, index) => {
+                    return { name, order: index + 1, fixed: false };
+                }),
+                list2: [],
+                editable: true,
+                isDragging: false,
+                delayedDragging: false
+            };
+        },
+        methods: {
+            orderList() {
+                this.list = this.list.sort((one, two) => {
+                    return one.order - two.order;
+                });
+            },
+            onMove({ relatedContext, draggedContext }) {
+                const relatedElement = relatedContext.element;
+                const draggedElement = draggedContext.element;
+                return (
+                    (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+                );
+            }
+        },
+        computed: {
+            dragOptions() {
+                return {
+                    animation: 0,
+                    group: "description",
+                    disabled: !this.editable,
+                    ghostClass: "ghost"
+                };
+            },
+            listString() {
+                return JSON.stringify(this.list, null, 2);
+            },
+            list2String() {
+                return JSON.stringify(this.list2, null, 2);
+            }
+        },
+        watch: {
+            isDragging(newValue) {
+                if (newValue) {
+                    this.delayedDragging = true;
+                    return;
+                }
+                this.$nextTick(() => {
+                    this.delayedDragging = false;
+                });
             }
         }
     }
