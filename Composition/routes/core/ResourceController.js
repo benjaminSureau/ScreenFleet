@@ -21,7 +21,7 @@ function getAll(req, res) {
     });
 }
 
-Resource.exports = {
+module.exports = {
     create,
     getAll
 };

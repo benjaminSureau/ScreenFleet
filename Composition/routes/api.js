@@ -1,4 +1,5 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express();
 const CompositionController = require('./core/CompositionController');
 const ModuleController = require('./core/ModuleController');
 const ResourceController = require('./core/ResourceController');
@@ -16,21 +17,37 @@ const TvController = require('./core/TvController');
 
 router
     .route('/compositions/')
-    .post(CompositionController.create)
-    .get(CompositionController.getAll);
+    .post(function(){
+        CompositionController.create();
+    })
+    .get(function(){
+        CompositionController.getAll();
+    });
 
 router
     .route('/modules/')
-    .post(ModuleController.create)
-    .get(ModuleController.getById);
+    .post(function(){
+        ModuleController.create();
+    })
+    .get(function(){
+        ModuleController.getAll();
+    });
 
 router
     .route('/resources/')
-    .post(ResourceController.create)
-    .get(ResourceController.getById);
+    .post(function(){
+        ResourceController.create();
+    })
+    .get(function(){
+        ResourceController.getAll();
+    });
 
 router
     .route('/TVs/')
-    .post(TvController.create)
-    .get(TvController.getById);
+    .post(function(){
+        TvController.create();
+    })
+    .get(function(){
+        TvController.getAll();
+    });
 

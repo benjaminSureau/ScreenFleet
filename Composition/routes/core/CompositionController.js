@@ -21,7 +21,6 @@ function getAll(req, res) {
     });
 }
 
-Composition.exports = {
-    create,
-    getAll
+module.exports = {
+    create, getAll
 };

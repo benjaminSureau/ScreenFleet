@@ -21,7 +21,7 @@ function getAll(req, res) {
     });
 }
 
-Tv.exports = {
+module.exports = {
     create,
     getAll
 };
