@@ -1,9 +1,18 @@
 const TvService = require('../../services/core/TvService');
 const mongoose = require('mongoose');
 
+const DEFAULT_PORT = 3001;
+
+let ports = [];
+
+
 function create(req, res) {
     if (req.body.port == null && (req.body.compositionId == null || mongoose.Types.ObjectId.isValid(req.body.compositionId))) {
-        let tv = TvService.addTv(req.body);
+        let port = DEFAULT_PORT;
+        if (ports.length > 0) {
+            port = ports[ports.length] + 1;
+        }
+        let tv = TvService.addTv(req.body, port);
         return res.status(201).send({tv:tv});
     } else {
         return res.status(400);
@@ -61,7 +70,7 @@ function remove(req, res) {
             .then(function(tv){
                 if(tv == null || typeof tv == 'undefined') {
                     return res.status(400);
-                }else{
+                } else{
                     return res.status(200).json({tv: tv});
                 }
             })
@@ -71,10 +80,25 @@ function remove(req, res) {
     }
 }
 
+function getAllTvPorts() {
+    TvService.getAll()
+        .then(function (tvs) {
+            if (tvs !== null && typeof tvs !== 'undefined' && tvs.length > 0) {
+                for (const tv in tvs) {
+                    ports.push(tv.port);
+                }
+            }
+        })
+        .catch(() => {
+            return null;
+        });
+}
+
 module.exports = {
     create,
     getAll,
     update,
     getById,
-    remove
+    remove,
+    getAllTvPorts
 };

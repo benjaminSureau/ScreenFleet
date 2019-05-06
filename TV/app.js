@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const mongoose = require('mongoose');
+const TvController = require('./routes/core/TvController');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -20,6 +21,8 @@ mongoose.connect(
         }
     },
 );
+
+TvController.getAllTvPorts();
 
 // ------ Enable cross origin requests
 app.use((req, res, next) => {
