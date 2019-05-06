@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 app.use('/api', require('./routes/index'));
 
 // ------ Start web server ------
-const port = 3000;
+const port = 3001;
 app.listen(port, () => {
   console.log('television service listening on port ' + port); // eslint-disable-line
 });

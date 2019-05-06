@@ -1,7 +1,7 @@
 const TvService = require('../../services/core/TvService');
 const mongoose = require('mongoose');
 
-const DEFAULT_PORT = 3001;
+const DEFAULT_PORT = 3002;
 
 let ports = [];
 

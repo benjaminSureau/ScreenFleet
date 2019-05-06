@@ -36,8 +36,6 @@ function updateTv(id, body){
     return new Promise(((resolve, reject) => {
         Tv.findById(id)
             .then((tv) => {
-                if(typeof body.port != 'undefined')
-                    tv.port = body.port;
                 if(typeof body.compositionId != 'undefined')
                     tv.compositionId = body.compositionId;
                 tv.save()
