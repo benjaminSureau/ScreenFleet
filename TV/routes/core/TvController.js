@@ -10,9 +10,10 @@ function create(req, res) {
     if (req.body.port == null && (req.body.compositionId == null || mongoose.Types.ObjectId.isValid(req.body.compositionId))) {
         let port = DEFAULT_PORT;
         if (ports.length > 0) {
-            port = ports[ports.length] + 1;
+            port = ports[ports.length - 1] + 1;
         }
         let tv = TvService.addTv(req.body, port);
+        ports.push(tv.port);
         return res.status(201).send({tv:tv});
     } else {
         return res.status(400);
@@ -83,13 +84,12 @@ function remove(req, res) {
 function getAllTvPorts() {
     TvService.getAll()
         .then(function (tvs) {
-            if (tvs !== null && typeof tvs !== 'undefined' && tvs.length > 0) {
+            if (tvs !== null && typeof tvs !== 'undefined') {
                 tvs = (tvs['tvs']);
                 for (var i = 0; i < tvs.length; i++) {
                     var tv = tvs[i];
                     ports.push(tv.port);
                 }
-                console.log(ports);
             }
         })
         .catch(() => {
