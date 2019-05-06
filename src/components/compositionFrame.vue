@@ -27,16 +27,22 @@
             <draggable class="list-group" tag="ul" v-model="list" v-bind="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
                 <transition-group type="transition" :name="'flip-list'">
                     <li class="list-group-item" v-for="element in list" :key="element.order">
-                        <i :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true"></i>
-                        {{element.name}}
-                        <span class="badge">{{element.order}}</span>
+                        <v-card :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true">
+                            <v-card-title primary-title>
+                                <div>
+                                    <h3 class="headline mb-0">{{element.name}}</h3>
+                                </div>
+                            </v-card-title>
+                        </v-card>
+
+                        <!--<span class="badge">{{element.order}}</span>-->
                     </li>
                 </transition-group>
             </draggable>
         </div>
-        <div class="list-group col-md-3">
+        <!--<div class="list-group col-md-3">
             <pre>{{listString}}</pre>
-        </div>
+        </div>-->
     </div>
 
 </template>
@@ -65,7 +71,6 @@ const message = [
             list: message.map((name, index) => {
                 return { name, order: index + 1, fixed: false };
             }),
-            card_text: 'Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat.',
             list2: [],
             editable: true,
             isDragging: false,

@@ -25,20 +25,49 @@
         <br/>
         <br/>
 
-        <div class="col-md-3">
+        <!--<div>
+            <v-card style="background-color: grey; width: 90%; height: 30%">
+
             <draggable element="span" v-model="list2" v-bind="dragOptions" :move="onMove">
                 <transition-group name="no" class="list-group" tag="ul">
                     <li class="list-group-item" v-for="element in list2" :key="element.order">
-                        <i :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true"></i>
-                        {{element.name}}
-                        <span class="badge">{{element.order}}</span>
+                        <v-card :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true">
+
+                            <v-card-title primary-title>
+                                <div>
+                                    <h3 class="headline mb-0">{{element.name}}</h3>
+                                </div>
+                            </v-card-title>
+                        </v-card>
                     </li>
                 </transition-group>
             </draggable>
-        </div>
-        <div class="list-group col-md-3">
+            </v-card>
+
+        </div>-->
+            <v-card>
+                <v-responsive :aspect-ratio="16/9">
+
+                    <draggable element="span" v-model="list2" v-bind="dragOptions" :move="onMove">
+                        <transition-group name="no" class="list-group" tag="ul">
+                            <li class="list-group-item" v-for="element in list2" :key="element.order">
+                                <v-card :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true">
+
+                                    <v-card-title primary-title>
+                                        <div>
+                                            <h3 class="headline mb-0">{{element.name}}</h3>
+                                        </div>
+                                    </v-card-title>
+                                </v-card>
+                                <!--<span class="badge">{{element.order}}</span>-->
+                            </li>
+                        </transition-group>
+                    </draggable>
+                </v-responsive>
+            </v-card>
+        <!--<div class="list-group col-md-3">
             <pre>{{list2String}}</pre>
-        </div>
+        </div>-->
 
     </div>
 </template>
@@ -59,7 +88,6 @@ export default {
             list: message.map((name, index) => {
                 return { name, order: index + 1, fixed: false };
             }),
-            card_text: 'Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat.',
             list2: [],
             editable: true,
             isDragging: false,
