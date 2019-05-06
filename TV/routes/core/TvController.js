@@ -84,9 +84,12 @@ function getAllTvPorts() {
     TvService.getAll()
         .then(function (tvs) {
             if (tvs !== null && typeof tvs !== 'undefined' && tvs.length > 0) {
-                for (const tv in tvs) {
+                tvs = (tvs['tvs']);
+                for (var i = 0; i < tvs.length; i++) {
+                    var tv = tvs[i];
                     ports.push(tv.port);
                 }
+                console.log(ports);
             }
         })
         .catch(() => {

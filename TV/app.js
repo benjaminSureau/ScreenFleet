@@ -38,5 +38,5 @@ app.use('/api', require('./routes/index'));
 // ------ Start web server ------
 const port = 3000;
 app.listen(port, () => {
-  console.log('composition service listening on port ' + port); // eslint-disable-line
+  console.log('television service listening on port ' + port); // eslint-disable-line
 });
