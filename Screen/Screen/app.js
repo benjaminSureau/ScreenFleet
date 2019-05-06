@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const mongoose = require('mongoose');
 
+const TvController = require('./routes/core/TvController');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 let mongodbUri = 'mongodb://localhost:27017/ScreenFleet';
@@ -34,6 +36,7 @@ app.use('/api', require('./routes/index'));
 
 // ------ Start web server ------
 const port = process.argv[2];
+TvController.initScreen(port);
 app.listen(port, () => {
   console.log('screen service listening on port ' + port); // eslint-disable-line
 });

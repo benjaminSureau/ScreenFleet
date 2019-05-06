@@ -6,6 +6,11 @@ function updateTv(tv, body){
     }));
 }
 
+function initScreen(port) {
+
+}
+
 module.exports = {
-    updateTv
+    updateTv,
+    initScreen
 };

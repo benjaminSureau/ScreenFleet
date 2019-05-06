@@ -21,7 +21,19 @@ function getInformations(req, res) {
     return res.status(200).json({tv: screen});
 }
 
+function initScreen(port) {
+    TvService.initScreen(port)
+        .then(function (sc) {
+            if(sc != null || typeof sc != 'undefined')
+                screen = sc;
+        })
+        .catch(() => {
+            return null;
+        });
+}
+
 module.exports = {
     update,
-    getInformations
+    getInformations,
+    initScreen
 };
