@@ -50,26 +50,58 @@
             </v-card>
 
         </div>-->
-            <v-card>
-                <v-responsive :aspect-ratio="16/9">
 
-                    <draggable element="span" v-model="list2" v-bind="dragOptions" :move="onMove">
-                        <transition-group name="no" class="list-group" tag="ul">
-                            <li class="list-group-item" v-for="element in list2" :key="element.order">
-                                <v-card :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true">
+        <v-layout row wrap>
+            <v-flex pa-1 xs6>
+                <v-card>
+                    <v-card-title primary-title>
+                            <h3 class="headline mb-0" >TV One</h3>
+                    </v-card-title>
+                    <v-responsive :aspect-ratio="16/9">
+                        <draggable element="span" v-model="list2" v-bind="dragOptions" :move="onMove">
+                            <transition-group name="no" class="list-group" tag="ul">
+                                <div v-for="element in list2" :key="element.order">
+                                    <v-card :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true">
 
-                                    <v-card-title primary-title>
-                                        <div>
-                                            <h3 class="headline mb-0">{{element.name}}</h3>
-                                        </div>
-                                    </v-card-title>
-                                </v-card>
-                                <!--<span class="badge">{{element.order}}</span>-->
-                            </li>
-                        </transition-group>
-                    </draggable>
-                </v-responsive>
-            </v-card>
+                                        <v-card-title primary-title>
+                                            <div>
+                                                <h3 class="headline mb-0">{{element.name}}</h3>
+                                            </div>
+                                        </v-card-title>
+                                    </v-card>
+                                    <!--<span class="badge">{{element.order}}</span>-->
+                                </div>
+                            </transition-group>
+                        </draggable>
+                    </v-responsive>
+                </v-card>
+            </v-flex>
+            <v-flex pa-1 xs6>
+                <v-card>
+
+                    <v-card-title primary-title>
+                        <h3 class="headline mb-0" >TV two</h3>
+                    </v-card-title>
+                    <v-responsive :aspect-ratio="16/9">
+                        <draggable element="span" v-model="list3" v-bind="dragOptions" :move="onMove" style="width: 100%; height: 100%">
+                            <transition-group name="no" class="list-group" tag="ul">
+                                <li class="list-group-item" v-for="element in list3" :key="element.order">
+                                    <v-card :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true">
+
+                                        <v-card-title primary-title>
+                                            <div>
+                                                <h3 class="headline mb-0">{{element.name}}</h3>
+                                            </div>
+                                        </v-card-title>
+                                    </v-card>
+                                    <!--<span class="badge">{{element.order}}</span>-->
+                                </li>
+                            </transition-group>
+                        </draggable>
+                    </v-responsive>
+                </v-card>            </v-flex>
+        </v-layout>
+
         <!--<div class="list-group col-md-3">
             <pre>{{list2String}}</pre>
         </div>-->
@@ -80,9 +112,6 @@
 <script>
 import draggable from "vuedraggable";
 
-
-const message = [];
-
 export default {
     name: 'tvFrame',
     components: {
@@ -90,10 +119,8 @@ export default {
     },
     data() {
         return {
-            list: message.map((name, index) => {
-                return { name, order: index + 1, fixed: false };
-            }),
             list2: [],
+            list3: [],
             editable: true,
             isDragging: false,
             delayedDragging: false
@@ -127,6 +154,9 @@ export default {
         },
         list2String() {
             return JSON.stringify(this.list2, null, 2);
+        },
+        list3String() {
+            return JSON.stringify(this.list3, null, 2);
         }
     },
     watch: {
