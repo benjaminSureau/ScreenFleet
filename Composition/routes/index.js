@@ -3,7 +3,6 @@ const router = express();
 const CompositionController = require('./core/CompositionController');
 const ModuleController = require('./core/ModuleController');
 const ResourceController = require('./core/ResourceController');
-const TvController = require('./core/TvController');
 
 router.get('/', (req, res) => {
     res.json({
@@ -47,16 +46,5 @@ router
     .put(ResourceController.update)
     .delete(ResourceController.remove)
     .get(ResourceController.getById);
-
-router
-    .route('/TVs/')
-    .post(TvController.create)
-    .get(TvController.getAll);
-
-router
-    .route('/TVs/:id')
-    .put(TvController.update)
-    .delete(TvController.remove)
-    .get(TvController.getById);
 
 module.exports = router;
