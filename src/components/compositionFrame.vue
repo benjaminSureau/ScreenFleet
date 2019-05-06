@@ -1,50 +1,39 @@
 <template>
     <div>
-        <v-card>
-            <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
-                aspect-ratio="3"
-            ></v-img>
-
-            <v-card-title primary-title>
-                <div>
-                    <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                    <div> {{ card_text }} </div>
-                </div>
-            </v-card-title>
-
-            <v-card-actions>
-                <v-btn fab dark small>
-                    <v-icon dark>remove</v-icon>
-                </v-btn>
-
-                <v-btn fab dark small>
-                    <v-icon dark>add</v-icon>
-                </v-btn>
-            </v-card-actions>
-        </v-card>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-        <div class="col-md-3">
-            <draggable class="list-group" tag="ul" v-model="list" v-bind="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
-                <transition-group type="transition" :name="'flip-list'">
-                    <li class="list-group-item" v-for="element in list" :key="element.order">
-                        <v-card :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true">
+        <v-card-title class="justify-center">
+            <div>
+                <h3 class="headline mb-0">Composition</h3>
+            </div>
+        </v-card-title>
+        <v-layout row wrap class="justify-center">
+            <div class="list-tv" v-for="composition in compositions">
+                <v-flex pa-3>
+                    <v-card>
+                        <v-card-title class="justify-center">
+                            <h3 class="headline mb-0" >{{composition._id}}</h3>
+                        </v-card-title>
+                        <draggable element="span" v-bind="dragOptions" :move="onMove">
                             <v-card-title primary-title>
                                 <div>
-                                    <h3 class="headline mb-0">{{element.name}}</h3>
+                                    <h3 class="headline mb-0">{{composition.name}}</h3>
                                 </div>
                             </v-card-title>
-                        </v-card>
+                        </draggable>
+                    </v-card>
+                </v-flex>
+            </div>
+        </v-layout>
 
-                        <!--<span class="badge">{{element.order}}</span>-->
-                    </li>
-                </transition-group>
-            </draggable>
-        </div>
+        <v-card-actions>
+            <v-btn fab dark small>
+                <v-icon dark>remove</v-icon>
+            </v-btn>
+
+            <v-btn fab dark small>
+                <v-icon dark>add</v-icon>
+            </v-btn>
+        </v-card-actions>
+
         <!--<div class="list-group col-md-3">
             <pre>{{listString}}</pre>
         </div>-->
@@ -66,6 +55,12 @@ const message = [
     "Sortablejs"
 ];
 
+const compositions = [
+    {_id: '1', name: 'compo1'},
+    {_id: '2', name: 'compo2'},
+    {_id: '3', name: 'compo3'},
+    {_id: '4', name: 'compo4'}
+];
     export default {
         name: 'compositionFrame',
     components: {
@@ -76,6 +71,7 @@ const message = [
             list: message.map((name, index) => {
                 return { name, order: index + 1, fixed: false };
             }),
+            compositions,
             list2: [],
             editable: true,
             isDragging: false,
