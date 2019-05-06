@@ -38,15 +38,15 @@ function updateResource(id, body){
                     resource.multimediaLink = body.multimediaLink;
                 resource.save()
                     .then((object) => {
-                        resolve({status: 'UPDATED', resource: object})
+                        resolve({status: 'UPDATED', resource: object});
                     })
                     .catch((error) => {
-                        reject({status: 'KO', error: error})
+                        reject({status: 'KO', error: error});
                     });
             })
             .catch((error) => {
                 reject({status: 'KO', error: error});
-            })
+            });
     }));
 }
 
@@ -56,15 +56,15 @@ function removeResource(id){
             .then((resource) => {
                 resource.deleteOne({_id: id})
                     .then((object) => {
-                        resolve({status: 'DELETED', resource: object})
+                        resolve({status: 'DELETED', resource: object});
                     })
                     .catch((error) => {
-                        reject({status: 'KO', error: error})
+                        reject({status: 'KO', error: error});
                     });
             })
             .catch((error) => {
                 reject({status: 'KO', error: error});
-            })
+            });
     }));
 }
 

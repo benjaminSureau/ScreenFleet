@@ -54,15 +54,15 @@ function updateTv(id, body){
                     tv.compositionId = body.compositionId;
                 tv.save()
                     .then((object) => {
-                        resolve({status: 'UPDATED', tv: object})
+                        resolve({status: 'UPDATED', tv: object});
                     })
                     .catch((error) => {
-                        reject({status: 'KO', error: error})
+                        reject({status: 'KO', error: error});
                     });
             })
             .catch((error) => {
                 reject({status: 'KO', error: error});
-            })
+            });
     }));
 }
 
@@ -72,15 +72,15 @@ function removeTv(id){
             .then((tv) => {
                 tv.deleteOne({_id: id})
                     .then((object) => {
-                        resolve({status: 'DELETED', tv: object})
+                        resolve({status: 'DELETED', tv: object});
                     })
                     .catch((error) => {
-                        reject({status: 'KO', error: error})
+                        reject({status: 'KO', error: error});
                     });
             })
             .catch((error) => {
                 reject({status: 'KO', error: error});
-            })
+            });
     }));
 }
 

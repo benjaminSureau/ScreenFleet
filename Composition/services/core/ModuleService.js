@@ -54,15 +54,15 @@ function updateModule(id, body){
                     module.nextModuleId = body.nextModuleId;
                 module.save()
                     .then((object) => {
-                        resolve({status: 'UPDATED', module: object})
+                        resolve({status: 'UPDATED', module: object});
                     })
                     .catch((error) => {
-                        reject({status: 'KO', error: error})
+                        reject({status: 'KO', error: error});
                     });
             })
             .catch((error) => {
                 reject({status: 'KO', error: error});
-            })
+            });
     }));
 }
 
@@ -72,15 +72,15 @@ function removeModule(id){
             .then((module) => {
                 module.deleteOne({_id: id})
                     .then((object) => {
-                        resolve({status: 'DELETED', module: object})
+                        resolve({status: 'DELETED', module: object});
                     })
                     .catch((error) => {
-                        reject({status: 'KO', error: error})
+                        reject({status: 'KO', error: error});
                     });
             })
             .catch((error) => {
                 reject({status: 'KO', error: error});
-            })
+            });
     }));
 }
 

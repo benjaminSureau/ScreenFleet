@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 function create(req, res) {
     if (req.body.moduleId == null) {
-        let composition = CompositionService.addComposition(req.body);
+        let composition = CompositionService.addComposition();
         return res.status(201).send({composition:composition});
     } else {
         return res.status(400);
