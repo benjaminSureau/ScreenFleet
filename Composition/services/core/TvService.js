@@ -44,9 +44,50 @@ function getTv(id){
     }));
 }
 
+function updateTv(id, body){
+    return new Promise(((resolve, reject) => {
+        Tv.findById(id)
+            .then((tv) => {
+                if(typeof body.port != 'undefined')
+                    tv.port = body.port;
+                if(typeof body.compositionId != 'undefined')
+                    tv.compositionId = body.compositionId;
+                tv.save()
+                    .then((object) => {
+                        resolve({status: 'UPDATED', tv: object})
+                    })
+                    .catch((error) => {
+                        reject({status: 'KO', error: error})
+                    });
+            })
+            .catch((error) => {
+                reject({status: 'KO', error: error});
+            })
+    }));
+}
+
+function removeTv(id){
+    return new Promise(((resolve, reject) => {
+        Tv.findById(id)
+            .then((tv) => {
+                tv.deleteOne({_id: id})
+                    .then((object) => {
+                        resolve({status: 'DELETED', tv: object})
+                    })
+                    .catch((error) => {
+                        reject({status: 'KO', error: error})
+                    });
+            })
+            .catch((error) => {
+                reject({status: 'KO', error: error});
+            })
+    }));
+}
 
 module.exports = {
     addTv,
     getAll,
-    getTv
+    getTv,
+    updateTv,
+    removeTv
 };

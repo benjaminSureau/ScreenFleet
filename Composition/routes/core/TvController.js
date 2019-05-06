@@ -24,10 +24,6 @@ function getAll(req, res) {
         });
 }
 
-function update(req, res) {
-
-}
-
 function getById(req, res) {
     if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
         TvService.getTv(req.params.id)
@@ -35,7 +31,7 @@ function getById(req, res) {
                 if(tv == null || typeof tv == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({composition: tv});
+                    return res.status(200).json({tv: tv});
                 }})
             .catch((error) => {
                 return res.sendStatus(400).json({error:error});
@@ -43,8 +39,36 @@ function getById(req, res) {
     }
 }
 
-function remove(req, res) {
+function update(req, res){
+    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        TvService.updateTv(req.params.id, req.body)
+            .then(function(tv){
+                if(tv == null || typeof tv == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({tv: tv});
+                }
+            })
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
+}
 
+function remove(req, res) {
+    if(req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        TvService.removeTv(req.params.id)
+            .then(function(tv){
+                if(tv == null || typeof tv == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({tv: tv});
+                }
+            })
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
 }
 
 module.exports = {

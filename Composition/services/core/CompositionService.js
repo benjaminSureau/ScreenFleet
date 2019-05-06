@@ -1,6 +1,6 @@
 const Composition = require('../../models/core/Compositions');
 
-function addComposition() {
+function addComposition(params) {
     let composition = new Composition();
     composition.save().then(function () {
         return composition;
@@ -29,8 +29,48 @@ function getComposition(id){
     }));
 }
 
+function updateComposition(id, body){
+    return new Promise(((resolve, reject) => {
+        Composition.findById(id)
+            .then((composition) => {
+                if(typeof body.moduleId != 'undefined')
+                    composition.moduleId = body.moduleId;
+                composition.save()
+                    .then((object) => {
+                        resolve({status: 'UPDATED', composition: object})
+                    })
+                    .catch((error) => {
+                        reject({status: 'KO', error: error})
+                    });
+            })
+            .catch((error) => {
+                reject({status: 'KO', error: error});
+            })
+    }));
+}
+
+function removeComposition(id){
+    return new Promise(((resolve, reject) => {
+        Composition.findById(id)
+            .then((composition) => {
+                composition.deleteOne({_id: id})
+                    .then((object) => {
+                        resolve({status: 'DELETED', composition: object})
+                    })
+                    .catch((error) => {
+                        reject({status: 'KO', error: error})
+                    });
+            })
+            .catch((error) => {
+                reject({status: 'KO', error: error});
+            })
+    }));
+}
+
 module.exports = {
     addComposition,
     getAll,
-    getComposition
+    getComposition,
+    updateComposition,
+    removeComposition
 };

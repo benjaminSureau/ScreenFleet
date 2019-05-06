@@ -26,7 +26,22 @@ function getAll(req, res) {
 }
 
 function update(req, res) {
-
+    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)
+        && req.body.type != null && req.body.mode != null && req.body.splitMode != null
+        && req.body.numberOfSlides != null
+        && (req.body.nextModuleId == null || mongoose.Types.ObjectId.isValid(req.body.nextModuleId))) {
+        ModuleService.updateModule(req.params.id, req.body)
+            .then(function(module){
+                if(module == null || typeof module == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({module: module});
+                }
+            })
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
 }
 
 function getById(req, res) {
@@ -36,7 +51,7 @@ function getById(req, res) {
                 if(module == null || typeof module == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({composition: module});
+                    return res.status(200).json({module: module});
                 }})
             .catch((error) => {
                 return res.sendStatus(400).json({error:error});
@@ -45,13 +60,25 @@ function getById(req, res) {
 }
 
 function remove(req, res) {
-
+    if(req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        ModuleService.removeModule(req.params.id)
+            .then(function(module){
+                if(module == null || typeof module == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({module: module});
+                }
+            })
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
 }
 
 module.exports = {
     create,
     getAll,
-    update,
     getById,
+    update,
     remove
 };

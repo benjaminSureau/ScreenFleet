@@ -24,10 +24,6 @@ function getAll(req, res) {
         });
 }
 
-function update(req, res) {
-
-}
-
 function getById(req, res) {
     if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
         ResourceService.getResource(req.params.id)
@@ -35,7 +31,7 @@ function getById(req, res) {
                 if(resource == null || typeof resource == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({composition: resource});
+                    return res.status(200).json({resource: resource});
                 }})
             .catch((error) => {
                 return res.sendStatus(400).json({error:error});
@@ -43,14 +39,42 @@ function getById(req, res) {
     }
 }
 
-function remove(req, res) {
+function update(req, res) {
+    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        ResourceService.updateResource(req.params.id, req.body)
+            .then(function(resource){
+                if(resource == null || typeof resource == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({resource: resource});
+                }
+            })
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
+}
 
+function remove(req, res) {
+    if(req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        ResourceService.removeResource(req.params.id)
+            .then(function(resource){
+                if(resource == null || typeof resource == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({resource: resource});
+                }
+            })
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
 }
 
 module.exports = {
     create,
     getAll,
-    update,
     getById,
+    update,
     remove
 };

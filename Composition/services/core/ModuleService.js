@@ -36,8 +36,58 @@ function getModule(id){
     }));
 }
 
+function updateModule(id, body){
+    return new Promise(((resolve, reject) => {
+        Module.findById(id)
+            .then((module) => {
+                if(typeof body.type != 'undefined')
+                    module.type = body.type;
+                if(typeof body.mode != 'undefined')
+                    module.mode = body.mode;
+                if(typeof body.numberOfSlides != 'undefined')
+                    module.numberOfSlides = body.numberOfSlides;
+                if(typeof body.splitMode != 'undefined')
+                    module.splitMode = body.splitMode;
+                if(typeof body.resources != 'undefined')
+                    module.resources = body.resources;
+                if(typeof body.nextModuleId != 'undefined')
+                    module.nextModuleId = body.nextModuleId;
+                module.save()
+                    .then((object) => {
+                        resolve({status: 'UPDATED', module: object})
+                    })
+                    .catch((error) => {
+                        reject({status: 'KO', error: error})
+                    });
+            })
+            .catch((error) => {
+                reject({status: 'KO', error: error});
+            })
+    }));
+}
+
+function removeModule(id){
+    return new Promise(((resolve, reject) => {
+        Module.findById(id)
+            .then((module) => {
+                module.deleteOne({_id: id})
+                    .then((object) => {
+                        resolve({status: 'DELETED', module: object})
+                    })
+                    .catch((error) => {
+                        reject({status: 'KO', error: error})
+                    });
+            })
+            .catch((error) => {
+                reject({status: 'KO', error: error});
+            })
+    }));
+}
+
 module.exports = {
     addModule,
     getAll,
-    getModule
+    getModule,
+    updateModule,
+    removeModule
 };

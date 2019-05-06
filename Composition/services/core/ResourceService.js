@@ -30,8 +30,48 @@ function getResource(id){
     }));
 }
 
+function updateResource(id, body){
+    return new Promise(((resolve, reject) => {
+        Resource.findById(id)
+            .then((resource) => {
+                if(typeof body.multimediaLink != 'undefined')
+                    resource.multimediaLink = body.multimediaLink;
+                resource.save()
+                    .then((object) => {
+                        resolve({status: 'UPDATED', resource: object})
+                    })
+                    .catch((error) => {
+                        reject({status: 'KO', error: error})
+                    });
+            })
+            .catch((error) => {
+                reject({status: 'KO', error: error});
+            })
+    }));
+}
+
+function removeResource(id){
+    return new Promise(((resolve, reject) => {
+        Resource.findById(id)
+            .then((resource) => {
+                resource.deleteOne({_id: id})
+                    .then((object) => {
+                        resolve({status: 'DELETED', resource: object})
+                    })
+                    .catch((error) => {
+                        reject({status: 'KO', error: error})
+                    });
+            })
+            .catch((error) => {
+                reject({status: 'KO', error: error});
+            })
+    }));
+}
+
 module.exports = {
     addResource,
     getAll,
-    getResource
+    getResource,
+    updateResource,
+    removeResource
 };

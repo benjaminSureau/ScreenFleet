@@ -24,21 +24,32 @@ function getAll(req, res) {
         });
 }
 
-function update(req, res) {
-    //if (req.params.id != null) {
-        //let composition = CompositionService.getComposition(req.params.id);
-    //}
-}
-
 function getById(req, res) {
     if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
         CompositionService.getComposition(req.params.id)
             .then(function(composition){
-            if(composition == null || typeof composition == 'undefined') {
-                return res.status(400);
-            }else{
-                return res.status(200).json({composition: composition});
-            }})
+                if(composition == null || typeof composition == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({composition: composition});
+                }})
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
+}
+
+function update(req, res) {
+    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)
+        && mongoose.Types.ObjectId.isValid(req.body.moduleId)) {
+        CompositionService.updateComposition(req.params.id, req.body)
+            .then(function(composition){
+                if(composition == null || typeof composition == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({composition: composition});
+                }
+            })
             .catch((error) => {
                 return res.sendStatus(400).json({error:error});
             });
@@ -46,13 +57,25 @@ function getById(req, res) {
 }
 
 function remove(req, res) {
-
+    if(req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        CompositionService.removeComposition(req.params.id)
+            .then(function(tv){
+                if(tv == null || typeof tv == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json({tv: tv});
+                }
+            })
+            .catch((error) => {
+                return res.sendStatus(400).json({error:error});
+            });
+    }
 }
 
 module.exports = {
     create,
     getAll,
-    update,
     getById,
+    update,
     remove
 };
