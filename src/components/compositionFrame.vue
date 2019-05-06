@@ -6,7 +6,7 @@
             </div>
         </v-card-title>
         <v-layout row wrap class="justify-center">
-            <div class="list-tv" v-for="composition in compositions">
+            <div id="compositions" class="list-tv" v-for="composition in compositions">
                 <v-flex pa-3>
                     <v-card>
                         <v-card-title class="justify-center">
@@ -29,7 +29,7 @@
                 <v-icon dark>remove</v-icon>
             </v-btn>
 
-            <v-btn fab dark small>
+            <v-btn fab dark small v-on:click="addTv(compositions)">
                 <v-icon dark>add</v-icon>
             </v-btn>
         </v-card-actions>
@@ -90,6 +90,10 @@ const compositions = [
             return (
                 (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
             );
+        },
+        addTv: function (compositions) {
+            alert(compositions);
+            compositions.add
         }
     },
     computed: {
