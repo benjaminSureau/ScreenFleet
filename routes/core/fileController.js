@@ -2,10 +2,18 @@ var aws = require('aws-sdk'),
     multer = require('multer'),
     multerS3 = require('multer-s3');
 
+
+let data = 'Q1c5T0NZUkwwUkYvRm12YUJuTHFGUElzc1FKdElReVJHNTFvUTRJeA==';
+let data2 = 'QUtJQUlNRzZZS0lLRUpGWUlPNEE=';
+let buff = new Buffer(data, 'base64');
+let textAccessKey = buff.toString('ascii');
+buff = new Buffer(data2, 'base64');
+let textAccessId = buff.toString('ascii');
+
 /* Setup aws with account created */
 aws.config.update({
-    secretAccessKey: 'XXX',
-    accessKeyId: 'XXX',
+    secretAccessKey: textAccessKey,
+    accessKeyId: textAccessId,
     region: 'eu-west-3'
 });
 
@@ -67,27 +75,28 @@ function getAllFile(req, res) {
 }
 
 function getFile(req, res, next) {
-    if (!req.query.keyFile) {
-        res.json ({
-                "error" : 400,
-                "information": "You Must send in parameter the keyFile of the file"
-            }
-        );
-    }
 
-    var params = {Bucket: 'screenfleet', Key: req.query.keyFile};
-    console.log(s3.getObject(params).url);
-    s3.headObject(params, function (err, metadata) {
-        if (err && err.code === 'NotFound') {
-            res.json ({
-                    "error" : 500,
-                    "information": "the file doesn't exist in the bucket"
-                }
-            );
-        } else {
-            s3.getObject(params).createReadStream().pipe(res);
-        }
-    });
+     if (!req.query.keyFile) {
+         res.json ({
+                 "error" : 400,
+                 "information": "You Must send in parameter the keyFile of the file"
+             }
+         );
+         return;
+     }
+
+     var params = {Bucket: 'screenfleet', Key: req.query.keyFile};
+     s3.headObject(params, function (err, metadata) {
+         if (err && err.code === 'NotFound') {
+             res.json ({
+                     "error" : 500,
+                     "information": "the file doesn't exist in the bucket"
+                 }
+             );
+         } else {
+             s3.getObject(params).createReadStream().pipe(res);
+         }
+     });
 }
 
 module.exports = {
