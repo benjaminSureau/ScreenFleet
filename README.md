@@ -90,7 +90,7 @@ Route : GET http://localhost:3800/API/getFile?keyFile=1557144197139getImage.JPG
 
 Résultat :
 ```
-content of Image
+content of File
 ```
 
 Si le paramètre keyFile n'est pas renseigné ou est vide, le résultat sera le suivant :
