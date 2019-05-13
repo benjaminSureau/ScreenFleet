@@ -1,30 +1,70 @@
 # screenfleet
 
-> desc
+## Cloud
 
-## Build Setup
+Utilisation du S3 Bucket d'amazon AWS
 
-``` bash
-# install dependencies
-npm install
+### API
 
-# serve with hot reload at localhost:8080
-npm run dev
+####Upload d'un fichier
 
-# build for production with minification
-npm run build
+Route : POST http://localhost:3800/API/upload
 
-# build for production and view the bundle analyzer report
-npm run build --report
+Paramètre :
 
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+```
+{
+   "file": fichieràUpload
+}
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Important : la requête doit se faire en form-data
+
+
+
+Résultat :
+```
+{
+    "fileUrl": "https://screenfleet.s3.eu-west-3.amazonaws.com/1557151951757VfE_html5.mp4",
+    "keyFile": "1557151951757VfE_html5.mp4"
+}
+```
+
+Si une erreure s'est produite le résultat sera le suivant :
+```
+{
+    "error": 500
+}
+```
+
+
+####Récupérer les fichiers présent sur le bucket s3
+
+Route : GET http://localhost:3800/API/getAllFiles
+
+Résultat :
+```
+{
+    "size": 3,
+    "content": [
+        {
+            "fileUrl": "https://s3.eu-west-3.amazonaws.com/screenfleet/1557131009235DSC_0169.JPG",
+            "keyFile": "1557131009235DSC_0169.JPG"
+        },
+        {
+            "fileUrl": "https://s3.eu-west-3.amazonaws.com/screenfleet/15571335533231557131009235DSC_0169.JPG",
+            "keyFile": "15571335533231557131009235DSC_0169.JPG"
+        },
+        {
+            "fileUrl": "https://s3.eu-west-3.amazonaws.com/screenfleet/1557151951757VfE_html5.mp4",
+            "keyFile": "1557151951757VfE_html5.mp4"
+        }
+     ]
+}
+```
+Si une erreure s'est produite le résultat sera le suivant :
+```
+{
+    "error": 500
+}
+```
