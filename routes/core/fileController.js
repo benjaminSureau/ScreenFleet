@@ -4,8 +4,8 @@ var aws = require('aws-sdk'),
 
 /* Setup aws with account created */
 aws.config.update({
-    secretAccessKey: 'S4TBoUnoZanYzQV/R/e6bdTxRe0qYKHUktwbNHy9',
-    accessKeyId: 'AKIAJT3BPTVEIOXOPQKQ',
+    secretAccessKey: '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',
+    accessKeyId: 'AKIAIMG6YKIKEJFYIO4A',
     region: 'eu-west-3'
 });
 
