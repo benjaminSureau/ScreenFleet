@@ -6,7 +6,7 @@ Utilisation du S3 Bucket d'amazon AWS
 
 ### API
 
-####Configuration De l'API
+#### Configuration De l'API
 
 Ajouter les key AWS, impossible de les mettre dans le code et les push car mail reçu par AWS (Sécurité)
 
@@ -21,7 +21,7 @@ aws.config.update({
 });
 ```
 
-####Upload d'un fichier
+#### Upload d'un fichier
 
 Route : POST http://localhost:3800/API/upload
 
@@ -52,7 +52,7 @@ Si une erreure s'est produite le résultat sera le suivant :
 ```
 
 
-####Récupérer les fichiers présent sur le bucket s3
+#### Récupérer les fichiers présent sur le bucket s3
 
 Route : GET http://localhost:3800/API/getAllFiles
 
@@ -84,7 +84,7 @@ Si une erreure s'est produite le résultat sera le suivant :
 ```
 
 
-####Récupérer le contenu d'un fichier choisi
+#### Récupérer le contenu d'un fichier choisi
 
 Route : GET http://localhost:3800/API/getFile?keyFile=1557144197139getImage.JPG
 
