@@ -6,6 +6,10 @@ Utilisation du S3 Bucket d'amazon AWS
 
 ### API
 
+####Configuration De l'API
+
+Ajouter les key AWS, impossible de les mettre dans le code et les push car mail reçu par AWS (Sécurité)
+
 ####Upload d'un fichier
 
 Route : POST http://localhost:3800/API/upload
