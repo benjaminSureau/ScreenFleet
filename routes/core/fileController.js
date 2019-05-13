@@ -4,8 +4,8 @@ var aws = require('aws-sdk'),
 
 /* Setup aws with account created */
 aws.config.update({
-    secretAccessKey: 'XXXx',
-    accessKeyId: 'xXXX',
+    secretAccessKey: 'XXX',
+    accessKeyId: 'XXX',
     region: 'eu-west-3'
 });
 
@@ -34,7 +34,6 @@ function upload(req, res) {
         });
     }
     else {
-
     listAllKeys();
         res.json({
             'error': '500'
@@ -67,15 +66,28 @@ function getAllFile(req, res) {
     });
 }
 
-/* in test */
 function getFile(req, res, next) {
-    var params = {Bucket: 'screenfleet', Key: '1557151951757VfE_html5.mp4'};
-   // s3.getObject(params).forwardToExpress(res, next);
-    s3.getObject(params).createReadStream().pipe(res)
-    /*res.json ({
-         "test" :
- }
-     );*/
+    if (!req.query.keyFile) {
+        res.json ({
+                "error" : 400,
+                "information": "You Must send in parameter the keyFile of the file"
+            }
+        );
+    }
+
+    var params = {Bucket: 'screenfleet', Key: req.query.keyFile};
+    console.log(s3.getObject(params).url);
+    s3.headObject(params, function (err, metadata) {
+        if (err && err.code === 'NotFound') {
+            res.json ({
+                    "error" : 500,
+                    "information": "the file doesn't exist in the bucket"
+                }
+            );
+        } else {
+            s3.getObject(params).createReadStream().pipe(res);
+        }
+    });
 }
 
 module.exports = {

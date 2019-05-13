@@ -25,7 +25,7 @@ aws.config.update({
 
 Route : POST http://localhost:3800/API/upload
 
-Paramètre JSON :
+Body JSON :
 
 ```
 {
@@ -34,7 +34,6 @@ Paramètre JSON :
 ```
 
 Important : la requête doit se faire en form-data
-
 
 
 Résultat :
@@ -77,6 +76,39 @@ Résultat :
      ]
 }
 ```
+Si une erreure s'est produite le résultat sera le suivant :
+```
+{
+    "error": 500
+}
+```
+
+
+####Récupérer le contenu d'un fichier choisi
+
+Route : GET http://localhost:3800/API/getFile?keyFile=1557144197139getImage.JPG
+
+Résultat :
+```
+content of Image
+```
+
+Si le paramètre keyFile n'est pas renseigné ou est vide, le résultat sera le suivant :
+```
+{
+    "error": 500,
+    "information": "You Must send in parameter the keyFile of the file"
+}
+```
+
+Si le keyFile mis en paramètre ne correspond à aucun des fichiers stocké dans le s3 bucket le résultat sera le suivant :
+```
+{
+    "error": 500,
+    "information": "the file doesn't exist in the bucket"
+}
+```
+
 Si une erreure s'est produite le résultat sera le suivant :
 ```
 {
