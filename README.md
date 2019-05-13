@@ -10,11 +10,22 @@ Utilisation du S3 Bucket d'amazon AWS
 
 Ajouter les key AWS, impossible de les mettre dans le code et les push car mail reçu par AWS (Sécurité)
 
+Les codes sont sur le sketchboard 
+
+Fichier à modifier : /routes/core/fileController.js
+```
+aws.config.update({
+    secretAccessKey: 'xXX',
+    accessKeyId: 'XXx',
+    region: 'eu-west-3'
+});
+```
+
 ####Upload d'un fichier
 
 Route : POST http://localhost:3800/API/upload
 
-Paramètre :
+Paramètre JSON :
 
 ```
 {
