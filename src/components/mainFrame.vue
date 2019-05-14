@@ -19,6 +19,9 @@
     import MenuBar from './menuBar.vue'
     import CompositionFrame from "./compositionFrame";
     import TvFrame from "./tvFrame";
+
+    let selectedComposition = null;
+
     export default {
         components : {
             TvFrame,

@@ -13,13 +13,11 @@
                         <v-card-title class="justify-center">
                             <h3 class="headline mb-0" >{{tv.name}}</h3>
                         </v-card-title>
-                        <draggable element="span" v-bind="dragOptions" :move="onMove">
-                            <v-card-title primary-title>
-                                <div>
-                                    <h3 class="headline mb-0">{{tv.composition.name}}</h3>
-                                </div>
-                            </v-card-title>
-                        </draggable>
+                        <v-card-title v-if="tv.composition != null" primary-title>
+                            <div>
+                                <h3 class="headline mb-0">{{tv.composition.name}}</h3>
+                            </div>
+                        </v-card-title>
                     </v-card>
                 </v-flex>
             </div>
@@ -30,7 +28,7 @@
                 <v-icon dark>remove</v-icon>
             </v-btn>
 
-            <v-btn fab dark small>
+            <v-btn fab dark small v-on:click="addTv(tvList)">
                 <v-icon dark>add</v-icon>
             </v-btn>
         </v-card-actions>
@@ -38,61 +36,32 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
 
 const tvList =[
-    { name: 'TV1', composition: { name: 'compo1'}},
-    { name: 'TV2', composition: { name: 'compo2'}},
-    { name: 'TV3', composition: { name: ''}}
+    { name: 'TV 1'},
+    { name: 'TV 2'},
+    { name: 'TV 3'},
+    { name: 'TV 4'}
 ];
+
+let tvCounter = 4;
+
 export default {
     name: 'tvFrame',
     components: {
-        draggable,
     },
     data() {
         return {
-            tvList,
-            list3: [],
-            editable: true,
-            isDragging: false,
-            delayedDragging: false
+            tvList
         };
     },
-    methods: {
-        orderList() {
-            this.list = this.list.sort((one, two) => {
-                return one.order - two.order;
-            });
-        },
-        onMove({ relatedContext, draggedContext }) {
-            const relatedElement = relatedContext.element;
-            const draggedElement = draggedContext.element;
-            return (
-                (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-            );
-        }
-    },
     computed: {
-        dragOptions() {
-            return {
-                animation: 0,
-                group: "description",
-                disabled: !this.editable,
-                ghostClass: "ghost"
-            };
-        }
     },
-    watch: {
-        isDragging(newValue) {
-            if (newValue) {
-                this.delayedDragging = true;
-                return;
-            }
-            this.$nextTick(() => {
-                this.delayedDragging = false;
-            });
-        }
+    methods: {
+        addTv: function (tvList) {
+            tvCounter++;
+            tvList.push({_id: tvCounter, name: 'TV ' + tvCounter});
+        },
     }
 };
 </script>
