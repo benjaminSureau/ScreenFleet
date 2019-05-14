@@ -3,7 +3,13 @@
         <menu-bar></menu-bar>
         <v-app id="inspire">
             <v-layout row wrap>
+                <v-flex pa-1 xs8 style="border-right: black">
+                    <edit-composition-view-frame/>
 
+                </v-flex>
+                <v-flex pa-1 xs4>
+                    <edit-composition-option-frame/>
+                </v-flex>
             </v-layout>
         </v-app>
     </div>
@@ -11,26 +17,19 @@
 
 <script>
     import MenuBar from './menuBar.vue'
+    import EditCompositionViewFrame from "./editCompositionViewFrame";
+    import EditCompositionOptionFrame from "./editCompositionOptionsFrame";
+
 
     export default {
         name: "EditComposition",
 
         components : {
+            EditCompositionOptionFrame,
+            EditCompositionViewFrame,
             'menuBar': MenuBar,
         },methods: {
-            orderList() {
-                this.list = this.list.sort((one, two) => {
-                    return one.order - two.order;
-                });
-            },
-            onMove({ relatedContext, draggedContext }) {
-                const relatedElement = relatedContext.element;
-                const draggedElement = draggedContext.element;
-                console.log("okokokokokoko");
-                return (
-                    (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-                );
-            }
+
         },
     }
 </script>
