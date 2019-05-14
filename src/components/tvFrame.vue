@@ -69,6 +69,7 @@ export default {
             if (selectedComposition != null) {
                 tv.composition = selectedComposition;
                 console.log(tv.composition.name);
+                this.$forceUpdate();
             }
         },
     }
