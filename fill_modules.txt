@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5cdac674f2cf6239084cc032"},"type":"BASE","mode":"VIDEO","numberOfSlides":{"$numberInt":"0"},"splitMode":"HORIZONTAL","resources":{"multimediaLink":"https://www.google.com"},"nextModuleId":null}
+{"_id":{"$oid":"5adbc73ef2cf6239084cc033"},"type":"BASE","mode":"SLIDE_VIEW","numberOfSlides":{"$numberInt":"4"},"splitMode":"HORIZONTAL","resources":{"multimediaLink":"https://www.stackoverflow.com"},"nextModuleId":null}
+{"_id":{"$oid":"5cdac7a4f2cf6239084cc034"},"type":"MULTI","mode":"SPLIT_VIEW","numberOfSlides":{"$numberInt":"0"},"splitMode":"HORIZONTAL","resources":null,"nextModuleId":[{"$oid":"5cdac674f2cf6239084cc032"}]}

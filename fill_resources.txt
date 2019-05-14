@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5cc6fa97a264a7323c38c69d"},"multimediaLink":"https://www.google.com","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5cc6faafa264a7323c38c69e"},"multimediaLink":"https://www.stackoverflow.com","__v":{"$numberInt":"0"}}
