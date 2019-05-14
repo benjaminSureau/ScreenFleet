@@ -1,12 +1,13 @@
 const TvService = require('../../services/core/TvService');
-const mongoose = require('mongoose');
+const Tv = require('../../models/core/TVs');
 
-let screen;
+let screen = Tv();
 
 function update(req, res){
     TvService.updateTv(req.params.id, req.body)
         .then(function(tv){
             if(tv == null || typeof tv == 'undefined') {
+                screen = tv;
                 return res.status(400);
             } else {
                 return res.status(200).json({tv: tv});
@@ -18,7 +19,14 @@ function update(req, res){
 }
 
 function getInformations(req, res) {
-    return res.status(200).json({tv: screen});
+    TvService.getInformations(screen.port)
+        .then(function (tv) {
+            if(tv != null || typeof tv != 'undefined')
+                return res.status(200).json({tv: tv});
+        })
+        .catch(() => {
+            return null;
+        });
 }
 
 function initScreen(port) {

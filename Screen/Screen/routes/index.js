@@ -14,13 +14,8 @@ router.get('/', (req, res) => {
 
 router
     .route('/TVs/')
-    .post(TvController.create)
-    .get(TvController.getAll);
+    .put(TvController.update())
+    .get(TvController.getInformations());
 
-router
-    .route('/TVs/:id')
-    .put(TvController.update)
-    .delete(TvController.remove)
-    .get(TvController.getById);
 
 module.exports = router;
