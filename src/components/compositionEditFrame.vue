@@ -3,8 +3,7 @@
         <menu-bar></menu-bar>
         <v-app id="inspire">
             <v-layout row wrap>
-                test
-                sdẑdmdpzmdzpdzpdzd
+
             </v-layout>
         </v-app>
     </div>

@@ -9,7 +9,9 @@
         <v-layout row wrap class="justify-center">
             <div class="list-tv" v-for="tv in tvList">
                 <v-flex pa-3>
-                    <v-card>
+                    <v-card
+                        v-on:click.native ="show(tv)"
+                    >
                         <v-card-title class="justify-center">
                             <h3 class="headline mb-0" >{{tv.name}}</h3>
                         </v-card-title>
@@ -36,6 +38,9 @@
 </template>
 
 <script>
+import { selectedComposition } from './compositionFrame'
+console.log(selectedComposition);
+
 
 const tvList =[
     { name: 'TV 1'},
@@ -61,6 +66,9 @@ export default {
         addTv: function (tvList) {
             tvCounter++;
             tvList.push({_id: tvCounter, name: 'TV ' + tvCounter});
+        },
+        show: function (tv) {
+            tv.name = selectedComposition.name;
         },
     }
 };

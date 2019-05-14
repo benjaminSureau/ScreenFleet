@@ -63,6 +63,8 @@ const compositions = [
 ];
 
 let compoCounter = 4;
+export var selectedComposition = "blanla";
+
 
 export default {
     name: 'compositionFrame',
