@@ -43,18 +43,6 @@
 </template>
 
 <script>
-
-const message = [
-    "vue.draggable",
-    "draggable",
-    "component",
-    "for",
-    "vue.js 2.0",
-    "based",
-    "on",
-    "Sortablejs"
-];
-
 const compositions = [
     {_id: '1', name: 'Composition 1'},
     {_id: '2', name: 'Composition 2'},
@@ -63,7 +51,7 @@ const compositions = [
 ];
 
 let compoCounter = 4;
-export var selectedComposition = "blanla";
+export var selectedComposition = null;
 
 
 export default {
@@ -72,9 +60,6 @@ export default {
     },
     data() {
         return {
-            list: message.map((name, index) => {
-                return { name, order: index + 1, fixed: false };
-            }),
             compositions
         };
     },
@@ -99,5 +84,10 @@ export default {
 </script>
 
 <style scoped>
-
+    .fade-transition {
+        transition: opacity .3s ease;
+    }
+    .fade-enter, .fade-leave {
+        opacity: 0;
+    }
 </style>
