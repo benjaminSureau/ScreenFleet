@@ -1,5 +1,6 @@
 const TvService = require('../../services/core/TvService');
 const mongoose = require('mongoose');
+const exec  = require('child_process');
 
 const DEFAULT_PORT = 3001;
 
@@ -14,6 +15,7 @@ function create(req, res) {
         }
         let tv = TvService.addTv(req.body, port);
         ports.push(tv.port);
+        exec('../Screen/npm start -- ' + tv.port);
         return res.status(201).send({tv:tv});
     } else {
         return res.status(400);
