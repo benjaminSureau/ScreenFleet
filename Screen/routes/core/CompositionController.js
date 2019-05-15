@@ -5,9 +5,9 @@ function getById(req, res) {
     if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
         CompositionService.getComposition(req.params.id)
             .then(function(composition){
-                if(composition == null || typeof composition == 'undefined') {
+                if (composition == null || typeof composition == 'undefined') {
                     return res.status(400);
-                }else{
+                } else {
                     return res.status(200).json({composition: composition});
                 }})
             .catch((error) => {

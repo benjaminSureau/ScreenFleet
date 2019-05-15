@@ -2,7 +2,7 @@ const Tv = require('../../models/core/TVs');
 
 function updateTv(tv, body) {
     return new Promise(((resolve) => {
-        if(typeof body.compositionId != 'undefined')
+        if (typeof body.compositionId != 'undefined')
             tv.compositionId = body.compositionId;
         resolve({status: 'UPDATED', tv: tv});
     }));
@@ -11,7 +11,7 @@ function updateTv(tv, body) {
 function initScreen(port) {
     return new Promise(((resolve, reject) => {
         Tv.find({port : port}, function(error, tv) {
-            if(error) {
+            if (error) {
                 reject(null);
             }
             resolve({tv});
@@ -22,7 +22,7 @@ function initScreen(port) {
 function getInformations(port) {
     return new Promise(((resolve, reject) => {
         Tv.find({port : port}, function(error, tv) {
-            if(error) {
+            if (error) {
                 reject(null);
             }
             resolve({tv});

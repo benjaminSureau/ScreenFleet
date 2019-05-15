@@ -9,7 +9,7 @@ let screen = new Tv();
 function update(req, res){
     TvService.updateTv(req.params.id, req.body)
         .then(function(tv){
-            if(tv == null || typeof tv == 'undefined') {
+            if (tv == null || typeof tv == 'undefined') {
                 screen = tv;
                 return res.status(400);
             } else {
@@ -24,7 +24,7 @@ function update(req, res){
 function getInformations(req, res) {
     TvService.getInformations(screen.port)
         .then(function (tv) {
-            if(tv != null && typeof tv != 'undefined') {
+            if (tv != null && typeof tv != 'undefined') {
                 CompositionController.getById(tv.compositionId).then(function (compo) {
                     ModuleController.getById(compo.moduleId).then(function (module) {
                         let tree = new TreeNode(module);
@@ -45,7 +45,7 @@ function getInformations(req, res) {
 function initScreen(port) {
     TvService.initScreen(port)
         .then(function (sc) {
-            if(sc != null || typeof sc != 'undefined')
+            if (sc != null || typeof sc != 'undefined')
                 screen = sc;
         })
         .catch(() => {
