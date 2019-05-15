@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 function create(req, res) {
     if (req.body.multimediaLink != null && req.body.multimediaLink.length !== 0) {
         let resource = ResourceService.addResource(req.body);
-        return res.status(201).send({resource:resource});
+        return res.status(201).send(resource);
     } else {
         return res.status(400);
     }
@@ -16,11 +16,11 @@ function getAll(req, res) {
             if (resources == null || typeof resources == 'undefined') {
                 return res.status(400);
             } else {
-                return res.status(200).json({resource: resources});
+                return res.status(200).json(resources);
             }
         })
         .catch((error) => {
-            return res.sendStatus(400).json({error:error});
+            return res.sendStatus(400).json(error);
         });
 }
 
@@ -31,10 +31,10 @@ function getById(req, res) {
                 if(resource == null || typeof resource == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({resource: resource});
+                    return res.status(200).json(resource);
                 }})
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
@@ -46,11 +46,11 @@ function update(req, res) {
                 if(resource == null || typeof resource == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({resource: resource});
+                    return res.status(200).json(resource);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
@@ -62,11 +62,11 @@ function remove(req, res) {
                 if(resource == null || typeof resource == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({resource: resource});
+                    return res.status(200).json(resource);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }

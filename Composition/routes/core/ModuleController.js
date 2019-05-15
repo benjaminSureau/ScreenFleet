@@ -5,7 +5,7 @@ function create(req, res) {
     if (req.body.type != null && req.body.mode != null && req.body.numberOfSlides != null && req.body.splitMode != null
     && (req.body.nextModuleId == null || mongoose.Types.ObjectId.isValid(req.body.nextModuleId))) {
         let module = ModuleService.addModule(req.body);
-        return res.status(201).send({module: module});
+        return res.status(201).send(module);
     } else {
         return res.status(400);
     }
@@ -17,11 +17,11 @@ function getAll(req, res) {
             if (modules == null || typeof modules == 'undefined') {
                 return res.status(400);
             } else {
-                return res.status(200).json({module: modules});
+                return res.status(200).json(modules);
             }
         })
         .catch((error) => {
-            return res.sendStatus(400).json({error:error});
+            return res.sendStatus(400).json(error);
         });
 }
 
@@ -35,11 +35,11 @@ function update(req, res) {
                 if(module == null || typeof module == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({module: module});
+                    return res.status(200).json(module);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
@@ -51,10 +51,10 @@ function getById(req, res) {
                 if(module == null || typeof module == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({module: module});
+                    return res.status(200).json(module);
                 }})
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
@@ -66,11 +66,11 @@ function remove(req, res) {
                 if(module == null || typeof module == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({module: module});
+                    return res.status(200).json(module);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }

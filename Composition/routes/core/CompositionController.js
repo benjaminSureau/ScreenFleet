@@ -16,11 +16,11 @@ function getAll(req, res) {
             if (compositions == null || typeof compositions == 'undefined') {
                 return res.status(400);
             } else {
-                return res.status(200).json({composition: compositions});
+                return res.status(200).json(compositions);
             }
         })
         .catch((error) => {
-            return res.sendStatus(400).json({error:error});
+            return res.sendStatus(400).json(error);
         });
 }
 
@@ -31,10 +31,10 @@ function getById(req, res) {
                 if(composition == null || typeof composition == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({composition: composition});
+                    return res.status(200).json(composition);
                 }})
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
@@ -47,11 +47,11 @@ function update(req, res) {
                 if(composition == null || typeof composition == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({composition: composition});
+                    return res.status(200).json(composition);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
@@ -63,11 +63,11 @@ function remove(req, res) {
                 if(tv == null || typeof tv == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({tv: tv});
+                    return res.status(200).json(tv);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
