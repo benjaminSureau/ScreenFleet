@@ -17,7 +17,7 @@
                         </v-card-title>
                         <v-card-title primary-title>
                             <div>
-                                <h3 class="headline mb-0">{{typeof tv.composition==='undefined' ? 'null' : tv.composition.name}}</h3>
+                                <h3 class="headline mb-0">{{typeof tv.composition==='undefined' ? 'Vide' : tv.composition.name}}</h3>
                             </div>
                         </v-card-title>
                     </v-card>
@@ -26,7 +26,7 @@
         </v-layout>
 
         <v-card-actions class="right">
-            <v-btn fab dark small>
+            <v-btn fab dark small v-on:click="removeTv(tvList)">
                 <v-icon dark>remove</v-icon>
             </v-btn>
 
@@ -65,10 +65,15 @@ export default {
             tvCounter++;
             tvList.push({_id: tvCounter, name: 'TV ' + tvCounter});
         },
+        removeTv: function (tvList) {
+            tvList.pop();
+            if (tvCounter > 0) {
+                tvCounter--;
+            }
+        },
         show: function (tv) {
             if (selectedComposition != null) {
                 tv.composition = selectedComposition;
-                console.log(tv.composition.name);
                 this.$forceUpdate();
             }
         },

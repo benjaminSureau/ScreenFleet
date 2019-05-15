@@ -13,7 +13,7 @@
                         v-on:click.native ="select(composition)"
                     >
                         <v-card-title class="justify-center">
-                            <h3 class="headline mb-0" >{{composition._id}}</h3>
+                            <h3 class="headline mb-0" >{{composition.number}}</h3>
                         </v-card-title>
                             <v-card-title primary-title>
                                 <div>
@@ -26,7 +26,7 @@
         </v-layout>
 
         <v-card-actions>
-            <v-btn fab dark small>
+            <v-btn fab dark small v-on:click="removeComposition(compositions)">
                 <v-icon dark>remove</v-icon>
             </v-btn>
 
@@ -44,15 +44,15 @@
 
 <script>
 const compositions = [
-    {_id: '1', name: 'Composition 1'},
-    {_id: '2', name: 'Composition 2'},
-    {_id: '3', name: 'Composition 3'},
-    {_id: '4', name: 'Composition 4'}
+    {number: '1', name: 'Composition 1'},
+    {number: '2', name: 'Composition 2'},
+    {number: '3', name: 'Composition 3'},
+    {number: '4', name: 'Composition 4'}
 ];
 
 let compoCounter = 4;
 export var selectedComposition = null;
-
+import * as api from '../actions/compositionApi'
 
 export default {
     name: 'compositionFrame',
@@ -65,8 +65,20 @@ export default {
     },
     methods: {
         addComposition: function (compositions) {
-            compoCounter++;
-            compositions.push({_id: compoCounter, name: 'Composition ' + compoCounter});
+            api.createComposition()
+                .then((res) => {
+                    compoCounter++;
+                    compositions.push({_id: res.data._id, name: 'Composition ' + res.data._id.slice(-4), number: compoCounter});
+                })
+                .catch((err) => {
+                    alert(err);
+                });
+        },
+        removeComposition: function (compositions) {
+            compositions.pop();
+            if (compoCounter > 0) {
+                compoCounter--;
+            }
         },
         modify: function (composition) {
         },
@@ -84,10 +96,5 @@ export default {
 </script>
 
 <style scoped>
-    .fade-transition {
-        transition: opacity .3s ease;
-    }
-    .fade-enter, .fade-leave {
-        opacity: 0;
-    }
+
 </style>
