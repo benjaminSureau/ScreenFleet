@@ -7,7 +7,7 @@ const TreeNode = require('treenode').TreeNode;
 let screen = new Tv();
 
 function update(req, res){
-    TvService.updateTv(req.params.id, req.body)
+    TvService.updateTv(req.body.params.id, req.body)
         .then(function(tv){
             if (tv == null || typeof tv == 'undefined') {
                 screen = tv;

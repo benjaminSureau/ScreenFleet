@@ -14,8 +14,8 @@ router.get('/', (req, res) => {
 
 router
     .route('/TVs/')
-    .put(TvController.update())
-    .get(TvController.getInformations());
+    .put(TvController.update)
+    .get(TvController.getInformations);
 
 
 module.exports = router;
