@@ -16,3 +16,11 @@ export function createComposition() {
         moduleId: null
     });
 }
+
+export function putComposition(id, data) {
+    return instance.put(`/api/compositions/${id}`, data);
+}
+
+export function deleteComposition(id) {
+    return instance.delete(`/api/compositions/${id}`);
+}
