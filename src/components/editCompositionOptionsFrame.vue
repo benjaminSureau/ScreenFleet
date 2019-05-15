@@ -112,7 +112,7 @@ export default {
         };
     },
     mounted() {
-        apiCompo.getCompositionById("5cdc0fe1943dbc31545d1eda")
+        apiCompo.getCompositions("5cdc0fe1943dbc31545d1eda")
             .then((res) => {
                 this.composition = res.data.composition;
                 console.log(this.composition);
@@ -151,40 +151,40 @@ export default {
 
 // module creation
         splitHorizontally(){
-            apiModule.createModule()
+            /*apiModule.createModule()
                 .then((res) => {
                     //todo...
                 })
                 .catch((err) => {
                     alert(err);
-                });
+                });*/
         },
         splitVertically(){
-            apiModule.createModule()
+            /*apiModule.createModule()
                 .then((res) => {
                     //todo...
                 })
                 .catch((err) => {
                     alert(err);
-                });
+                });*/
         },
         splitToFourth(){
-            apiModule.createModule()
+            /*apiModule.createModule()
                 .then((res) => {
                     //todo...
                 })
                 .catch((err) => {
                     alert(err);
-                });
+                });*/
         },
         insertSlide(){
-            apiModule.createModule()
+            /*apiModule.createModule()
                 .then((res) => {
                     //todo...
                 })
                 .catch((err) => {
                     alert(err);
-                });
+                });*/
         },
 
 // resources creation
@@ -199,33 +199,33 @@ export default {
                 });*/
         },
         insertVideo(){
-            apiMResource.createResource()
+            /*apiMResource.createResource()
                 .then((res) => {
                     //todo...
                 })
                 .catch((err) => {
                     alert(err);
-                });
+                });*/
         },
         insertImage(){
-            apiMResource.createResource()
+            /*apiMResource.createResource()
                 .then((res) => {
                     //todo...
                 })
                 .catch((err) => {
                     alert(err);
-                });
+                });*/
         },
 // delete object
 
         deleteContent(id,type){
-            apiMResource.createResource()
+            /*apiMResource.createResource()
                 .then((res) => {
                     //todo...
                 })
                 .catch((err) => {
                     alert(err);
-                });
+                });*/
         }
     }
 };

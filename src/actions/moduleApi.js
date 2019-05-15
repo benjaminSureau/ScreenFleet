@@ -11,7 +11,7 @@ export function getModules() {
     return instance.get('/api/modules');
 }
 
-export function getModuleById(id) {
+export function getModule(id) {
     return instance.get(`/api/modules/${id}`);
 }
 
