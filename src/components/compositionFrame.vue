@@ -6,9 +6,10 @@
             </div>
         </v-card-title>
         <v-layout row wrap class="justify-center">
-            <div class="list-tv" v-for="composition in compositions">
+            <div v-for="composition in compositions">
                 <v-flex pa-3>
                     <v-card
+                        v-bind:style="selectedComposition === composition ? 'background :#483D8B': 'background :#FFFFFF'"
                         v-on:dblclick.native ="modify(composition)"
                         v-on:click.native ="select(composition)"
                     >
@@ -43,14 +44,8 @@
 </template>
 
 <script>
-const compositions = [
-    {number: '1', name: 'Composition 1'},
-    {number: '2', name: 'Composition 2'},
-    {number: '3', name: 'Composition 3'},
-    {number: '4', name: 'Composition 4'}
-];
 
-let compoCounter = 4;
+let compoCounter = 1;
 export var selectedComposition = null;
 import * as api from '../actions/compositionApi'
 
@@ -60,8 +55,22 @@ export default {
     },
     data() {
         return {
-            compositions
+            selectedComposition,
+            compositions : []
         };
+    },
+    mounted() {
+        api.getCompositions().then((result) => {
+
+            this.compositions = result.data.compositions;
+            this.compositions.forEach((composition, index) => {
+               composition.name = 'Composition ' + composition._id.slice(-4);
+               composition.number = index + 1;
+            });
+            compoCounter = this.compositions.length;
+        }, error => {
+            console.error(error);
+        });
     },
     methods: {
         addComposition: function (compositions) {
@@ -75,16 +84,31 @@ export default {
                 });
         },
         removeComposition: function (compositions) {
-            compositions.pop();
-            if (compoCounter > 0) {
-                compoCounter--;
+            let compoToDelete = compositions[compositions.length -1];
+            if (typeof compoToDelete !== 'undefined') {
+                api.deleteComposition(compoToDelete._id)
+                    .then(() => {
+                        compoCounter--;
+                        compositions.pop();
+                    })
+                    .catch((err) => {
+                        alert(err);
+                    })
+
             }
         },
         modify: function (composition) {
+            /*api.putComposition(selectedComposition._id, {moduleId : '5cdbd39f8778ae0e18ca11d1'})
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })*/
         },
         select: function (composition) {
             selectedComposition = composition;
-            console.log(selectedComposition.name);
+            this.selectedComposition = composition;
 
         }
     },
@@ -96,5 +120,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
