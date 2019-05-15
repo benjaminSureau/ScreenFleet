@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @click="select(null)">
         <v-card-title class="justify-center">
             <div>
                 <h3 class="headline mb-0">Composition</h3>
@@ -11,8 +11,7 @@
                     <v-card
                         v-bind:style="selectedComposition === composition ? 'background :#483D8B': 'background :#FFFFFF'"
                         v-on:dblclick.native ="modify(composition)"
-                        v-on:click.native ="select(composition)"
-                    >
+                        v-on:click.native.stop ="select(composition)">
                         <v-card-title class="justify-center">
                             <h3 class="headline mb-0" >{{composition.number}}</h3>
                         </v-card-title>
@@ -84,12 +83,15 @@ export default {
                 });
         },
         removeComposition: function (compositions) {
-            let compoToDelete = compositions[compositions.length -1];
-            if (typeof compoToDelete !== 'undefined') {
-                api.deleteComposition(compoToDelete._id)
+            if (typeof selectedComposition !== 'undefined' && selectedComposition != null) {
+                api.deleteComposition(selectedComposition._id)
                     .then(() => {
                         compoCounter--;
-                        compositions.pop();
+                        for(let i = 0; i < compositions.length; i++) {
+                            if (compositions[i] === selectedComposition) {
+                                compositions.splice(i,1);
+                            }
+                        }
                     })
                     .catch((err) => {
                         alert(err);
@@ -107,9 +109,13 @@ export default {
                 })*/
         },
         select: function (composition) {
-            selectedComposition = composition;
-            this.selectedComposition = composition;
-
+            if (composition === selectedComposition) {
+                selectedComposition = null;
+                this.selectedComposition = null;
+            } else {
+                selectedComposition = composition;
+                this.selectedComposition = composition;
+            }
         }
     },
     computed: {
