@@ -1,10 +1,10 @@
 const CompositionService = require('../../services/core/CompositionService');
 const mongoose = require('mongoose');
 
-function create(req, res) {
+async function create(req, res) {
     if (req.body.moduleId == null) {
-        let composition = CompositionService.addComposition();
-        return res.status(201).send({composition:composition});
+        let composition = await CompositionService.addComposition();
+        return res.status(201).send(composition);
     } else {
         return res.status(400);
     }
