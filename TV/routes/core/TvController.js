@@ -16,7 +16,7 @@ function create(req, res) {
         let tv = TvService.addTv(req.body, port);
         ports.push(tv.port);
         exec('../Screen/npm start -- ' + tv.port);
-        return res.status(201).send({tv:tv});
+        return res.status(201).send(tv);
     } else {
         return res.status(400);
     }
@@ -28,11 +28,11 @@ function getAll(req, res) {
             if (tvs == null || typeof tvs == 'undefined') {
                 return res.status(400);
             } else {
-                return res.status(200).json({tv: tvs});
+                return res.status(200).json(tvs);
             }
         })
         .catch((error) => {
-            return res.sendStatus(400).json({error:error});
+            return res.sendStatus(400).json(error);
         });
 }
 
@@ -43,10 +43,10 @@ function getById(req, res) {
                 if(tv == null || typeof tv == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({tv: tv});
+                    return res.status(200).json(tv);
                 }})
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
@@ -58,11 +58,11 @@ function update(req, res){
                 if(tv == null || typeof tv == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({tv: tv});
+                    return res.status(200).json(tv);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
@@ -74,11 +74,11 @@ function remove(req, res) {
                 if(tv == null || typeof tv == 'undefined') {
                     return res.status(400);
                 } else{
-                    return res.status(200).json({tv: tv});
+                    return res.status(200).json(tv);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
