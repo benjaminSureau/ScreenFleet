@@ -7,13 +7,13 @@ const DEFAULT_PORT = 3002;
 let ports = [];
 
 
-function create(req, res) {
+async function create(req, res) {
     if (req.body.port == null && (req.body.compositionId == null || mongoose.Types.ObjectId.isValid(req.body.compositionId))) {
         let port = DEFAULT_PORT;
         if (ports.length > 0) {
             port = ports[ports.length - 1] + 1;
         }
-        let tv = TvService.addTv(req.body, port);
+        let tv = await TvService.addTv(req.body, port);
         ports.push(tv.port);
         exec('../Screen/npm start -- ' + tv.port);
         return res.status(201).send(tv);
