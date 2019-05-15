@@ -6,12 +6,13 @@
             </div>
         </v-card-title>
 
-        <v-layout row wrap class="justify-center">
+        <v-layout row wrap class="justify-center" @click="select(null)">
             <div class="list-tv" v-for="tv in tvList">
                 <v-flex pa-3>
                     <v-card
-                        v-on:click.native ="show(tv)"
-                    >
+                        v-bind:style="isSelected(tv) ? 'background :#483D8B': 'background :#FFFFFF'"
+                        v-on:click.native.stop="select(tv); show(tv)"
+                        v-on:dblclick.native ="show(tv)">
                         <v-card-title class="justify-center">
                             <h3 class="headline mb-0" >{{tv.name}}</h3>
                         </v-card-title>
@@ -48,6 +49,7 @@ const tvList =[
 ];
 
 let tvCounter = 4;
+let selectedTv;
 
 export default {
     name: 'tvFrame',
@@ -55,7 +57,8 @@ export default {
     },
     data() {
         return {
-            tvList
+            tvList,
+            selectedTv
         };
     },
     computed: {
@@ -74,8 +77,24 @@ export default {
         show: function (tv) {
             if (selectedComposition != null) {
                 tv.composition = selectedComposition;
-                this.$forceUpdate();
             }
+            this.$forceUpdate();
+        },
+        select: function (tv) {
+            if (selectedComposition === null) {
+                if (tv === this.selectedTv) {
+                    this.selectedTv = null;
+                } else {
+                    this.selectedTv = tv;
+                }
+            }
+        },
+        isSelected: function (tv) {
+            console.log(selectedComposition);
+            if (selectedComposition !== null) {
+                return false;
+            }
+            return (selectedComposition !== undefined && tv === this.selectedTv);
         },
     }
 };
