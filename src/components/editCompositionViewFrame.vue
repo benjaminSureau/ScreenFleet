@@ -1,10 +1,9 @@
 <template>
     <div style="height: 100%">
 
-        <v-card height="60%">
+        <v-card height="70%">
             <v-card-title primary-title>
                 <div>
-                    <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
                 </div>
             </v-card-title>
 

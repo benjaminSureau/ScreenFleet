@@ -46,7 +46,6 @@
 </template>
 
 <script>
-
 let compoCounter = 1;
 export var selectedComposition = null;
 import * as apiCompo from '../actions/compositionApi'
@@ -100,7 +99,6 @@ export default {
                     .catch((err) => {
                         alert(err);
                     })
-
             }
         },
         modify: function (composition) {

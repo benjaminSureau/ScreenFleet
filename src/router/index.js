@@ -16,9 +16,10 @@ export default new Router({
 			component: MainFrame
 		},
 		{
-			path: '/EditComposition',
+			path: '/EditComposition/:id',
 			name: 'EditComposition',
-			component: EditComposition
+			component: EditComposition,
+            props: true
 		}
 	]
 });
