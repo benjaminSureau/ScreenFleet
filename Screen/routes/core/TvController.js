@@ -27,7 +27,7 @@ function getInformations(req, res) {
             if(tv != null && typeof tv != 'undefined') {
                 CompositionController.getById(tv.compositionId).then(function (compo) {
                     ModuleController.getById(compo.moduleId).then(function (module) {
-                        let tree = new TreeNode({id: 0, name: 'root'});
+                        let tree = new TreeNode(module);
                         return res.status(200).json({tv: createTree(module, tree)});
                     }).catch(() => {
                         return null;
@@ -55,7 +55,7 @@ function initScreen(port) {
 
 function createTree(module, tree) {
     if (module.nextModulesId == null) {
-        return tree.addChild(module);
+        return tree;
     }
     module.nextModulesId.forEach(function (mId) {
         let treeChild = new TreeNode(ModuleController.getById(mId));
