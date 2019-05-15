@@ -1,9 +1,9 @@
 const ResourceService = require('../../services/core/ResourceService');
 const mongoose = require('mongoose');
 
-function create(req, res) {
+async function create(req, res) {
     if (req.body.multimediaLink != null && req.body.multimediaLink.length !== 0) {
-        let resource = ResourceService.addResource(req.body);
+        let resource = await ResourceService.addResource(req.body);
         return res.status(201).send(resource);
     } else {
         return res.status(400);
