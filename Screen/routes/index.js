@@ -2,7 +2,7 @@ const express = require('express');
 const router = express();
 const TvController = require('./core/TvController');
 
-router.get('/', (req, res) => {
+router.route('/', (req, res) => {
     res.json({
         status: 'OK',
     });
