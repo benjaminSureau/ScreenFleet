@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 async function create(req, res) {
     if (req.body.moduleId == null) {
-        let composition = await CompositionService.addComposition();
+        let composition = await CompositionService.addComposition(req.body);
         return res.status(201).send(composition);
     } else {
         return res.status(400);
