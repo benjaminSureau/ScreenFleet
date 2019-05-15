@@ -1,11 +1,11 @@
 <template>
-    <div @click="select(null)">
+    <div >
         <v-card-title class="justify-center">
             <div>
                 <h3 class="headline mb-0">Compositions</h3>
             </div>
         </v-card-title>
-        <v-layout row wrap class="justify-center">
+        <v-layout row wrap class="justify-center" @click="select(null)">
             <div v-for="composition in compositions">
                 <v-flex pa-3>
                     <v-card
