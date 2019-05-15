@@ -2,7 +2,7 @@
     <div>
         <v-card-title class="justify-center">
             <div>
-                <h3 class="headline mb-0">TV</h3>
+                <h3 class="headline mb-0">TVs</h3>
             </div>
         </v-card-title>
 
