@@ -17,8 +17,8 @@ describe('Array', function() {
         describe('#CreateComposition()', function () {
             it('should save composition without error', function (done) {
                 var comp = new Compositions();
-                comp._id = "6ba7fc5fc4c9250a0884161a";
-                comp.moduleId = "5cdac674f2cf6239084cc032";
+                comp._id = mongoose.Types.ObjectId("6ba7fc5fc4c9250a0884161a");
+                comp.moduleId = mongoose.Types.ObjectId("5cdac674f2cf6239084cc032");
 
                 comp.save().then(() => {
                     assert.isNotNull(comp);
@@ -94,7 +94,7 @@ describe('Array', function() {
         describe('#CreateModule()', function () {
             it('should save module without error', function (done) {
                 var mod = new Modules();
-                mod._id = "5bc4fc5fc4c9250a0884161a";
+                mod._id = mongoose.Types.ObjectId("5bc4fc5fc4c9250a0884161a");
                 mod.type = "BASE";
                 mod.mode = "VIDEO";
                 mod.numberOfSlides = 0;
@@ -186,7 +186,7 @@ describe('Array', function() {
         describe('#CreateResource()', function () {
             it('should save resource without error', function (done) {
                 var res = new Resources();
-                res._id = "5bc5bc5fc4c9250a0884161a";
+                res._id = mongoose.Types.ObjectId("5bc5bc5fc4c9250a0884161a");
                 res.multimediaLink = "https://www.gooogle.com";
 
                 res.save().then(() => {

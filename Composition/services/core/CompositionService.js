@@ -1,8 +1,9 @@
 const Composition = require('../../models/core/Compositions');
 
-function addComposition() {
+function addComposition(params) {
     return new Promise((resolve, reject) => {{
         let composition = new Composition();
+        composition.moduleId = mongoose.Types.ObjectId(params.moduleId);
         composition.save()
             .then((comp) => {
                 resolve(comp);
