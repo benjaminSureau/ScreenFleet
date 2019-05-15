@@ -15,7 +15,7 @@ describe('Array', function() {
                 var tv = new Tvs();
                 tv._id = "6bb3fb5fc4c9250a0884161a";
                 tv.port = 3053;
-                tv.compositionId = "5cdac5d3f2cf6239084cc031";
+                tv.compositionId = mongoose.Types.ObjectId("5cdac5d3f2cf6239084cc031");
 
                 tv.save().then(() => {
                     assert.isNotNull(tv);
