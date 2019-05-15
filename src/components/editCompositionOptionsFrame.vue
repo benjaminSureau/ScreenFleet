@@ -189,13 +189,14 @@ export default {
 
 // resources creation
         insertStream(){
-            apiMResource.createResource()
+
+            /*apiMResource.createResource()
                 .then((res) => {
                     //todo...
                 })
                 .catch((err) => {
                     alert(err);
-                });
+                });*/
         },
         insertVideo(){
             apiMResource.createResource()

@@ -1,11 +1,15 @@
 <template>
     <div style="height: 100%">
 
-        <v-card height="70%">
-            <v-card-title primary-title>
-                <div>
-                </div>
-            </v-card-title>
+        <v-card height="70%" id="12345">
+            <v-card height="100%">
+
+                <v-card height="50%">
+                </v-card>
+                <v-card height="50%">
+                </v-card>
+
+            </v-card>
 
         </v-card>
     </div>
