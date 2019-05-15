@@ -1,6 +1,6 @@
 const Tv = require('../../models/core/TVs');
 
-function updateTv(tv, body){
+function updateTv(tv, body) {
     return new Promise(((resolve) => {
         if(typeof body.compositionId != 'undefined')
             tv.compositionId = body.compositionId;
@@ -20,7 +20,14 @@ function initScreen(port) {
 }
 
 function getInformations(port) {
-    return port;
+    return new Promise(((resolve, reject) => {
+        Tv.find({port : port}, function(error, tv) {
+            if(error) {
+                reject(null);
+            }
+            resolve({tv});
+        });
+    }));
 }
 
 module.exports = {
