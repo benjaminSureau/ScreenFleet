@@ -4,12 +4,12 @@ function addComposition() {
     return new Promise((resolve, reject) => {{
         let composition = new Composition();
         composition.save()
-            .then((object) => {
-                resolve(object);
+            .then((comp) => {
+                resolve(comp);
             })
             .catch((error) => {
                 reject(error);
-            })
+            });
     }});
 }
 
