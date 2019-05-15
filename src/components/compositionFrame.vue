@@ -1,18 +1,17 @@
 <template>
-    <div>
+    <div >
         <v-card-title class="justify-center">
             <div>
-                <h3 class="headline mb-0">Composition</h3>
+                <h3 class="headline mb-0">Compositions</h3>
             </div>
         </v-card-title>
-        <v-layout row wrap class="justify-center">
+        <v-layout row wrap class="justify-center" @click="select(null)">
             <div v-for="composition in compositions">
                 <v-flex pa-3>
                     <v-card
                         v-bind:style="selectedComposition === composition ? 'background :#483D8B': 'background :#FFFFFF'"
                         v-on:dblclick.native ="modify(composition)"
-                        v-on:click.native ="select(composition)"
-                    >
+                        v-on:click.native.stop ="select(composition)">
                         <v-card-title class="justify-center">
                             <h3 class="headline mb-0" >{{composition.number}}</h3>
                         </v-card-title>
@@ -34,6 +33,9 @@
             <v-btn fab dark small v-on:click="addComposition(compositions)">
                 <v-icon dark>add</v-icon>
             </v-btn>
+            <v-btn fab v-on:click="test()">
+                <v-icon dark>star</v-icon>
+            </v-btn>
         </v-card-actions>
 
         <!--<div class="list-group col-md-3">
@@ -47,7 +49,8 @@
 
 let compoCounter = 1;
 export var selectedComposition = null;
-import * as api from '../actions/compositionApi'
+import * as apiCompo from '../actions/compositionApi'
+import * as apiModule from '../actions/moduleApi'
 
 export default {
     name: 'compositionFrame',
@@ -60,7 +63,7 @@ export default {
         };
     },
     mounted() {
-        api.getCompositions().then((result) => {
+        apiCompo.getCompositions().then((result) => {
 
             this.compositions = result.data.compositions;
             this.compositions.forEach((composition, index) => {
@@ -74,7 +77,7 @@ export default {
     },
     methods: {
         addComposition: function (compositions) {
-            api.createComposition()
+            apiCompo.createComposition()
                 .then((res) => {
                     compoCounter++;
                     compositions.push({_id: res.data._id, name: 'Composition ' + res.data._id.slice(-4), number: compoCounter});
@@ -84,12 +87,15 @@ export default {
                 });
         },
         removeComposition: function (compositions) {
-            let compoToDelete = compositions[compositions.length -1];
-            if (typeof compoToDelete !== 'undefined') {
-                api.deleteComposition(compoToDelete._id)
+            if (typeof selectedComposition !== 'undefined' && selectedComposition != null) {
+                apiCompo.deleteComposition(selectedComposition._id)
                     .then(() => {
                         compoCounter--;
-                        compositions.pop();
+                        for (let i = 0; i < compositions.length; i++) {
+                            if (compositions[i] === selectedComposition) {
+                                compositions.splice(i,1);
+                            }
+                        }
                     })
                     .catch((err) => {
                         alert(err);
@@ -98,7 +104,7 @@ export default {
             }
         },
         modify: function (composition) {
-            /*api.putComposition(selectedComposition._id, {moduleId : '5cdbd39f8778ae0e18ca11d1'})
+            /*apiCompo.putComposition(selectedComposition._id, {moduleId : '5cdbd39f8778ae0e18ca11d1'})
                 .then((res) => {
                     console.log(res.data);
                 })
@@ -107,10 +113,29 @@ export default {
                 })*/
         },
         select: function (composition) {
-            selectedComposition = composition;
-            this.selectedComposition = composition;
-
+            if (composition === selectedComposition) {
+                selectedComposition = null;
+                this.selectedComposition = null;
+            } else {
+                selectedComposition = composition;
+                this.selectedComposition = composition;
+            }
+        },
+        test: function () {
+            apiModule.createModule(
+                {
+                    mode: "VIDEO",
+                    nextModuleId: null,
+                    numberOfSlides: 0,
+                    resources: {multimediaLink: "https://www.youporn.com"},
+                    splitMode: "VERTICAL",
+                    type: "BASE",
+                })
+                .then((res) => {
+                    console.log(res.data);
+                })
         }
+
     },
     computed: {
     },

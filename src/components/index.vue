@@ -7,8 +7,7 @@
                         v-for="n in 6"
                         :key="n"
                         xs12
-                        md4
-                    >
+                        md4>
                         <v-item>
                             <v-card
                                 slot-scope="{ active, toggle }"
@@ -16,8 +15,7 @@
                                 class="d-flex align-center"
                                 dark
                                 height="200"
-                                @click="toggle"
-                            >
+                                @click="toggle">
                                 <v-scroll-y-transition>
                                     <div
                                         v-if="active"
