@@ -49,7 +49,7 @@ const tvList =[
 ];
 
 let tvCounter = 4;
-let selectedTv;
+let selectedTv = null;
 let selectedComposition = null;
 
 export default {

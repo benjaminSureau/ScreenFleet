@@ -99,6 +99,7 @@ export default {
                             }
                         }
                         this.selectedComposition = null;
+                        EventBus.$emit('selectComposition', this.selectedComposition);
                     })
                     .catch((err) => {
                         alert(err);
