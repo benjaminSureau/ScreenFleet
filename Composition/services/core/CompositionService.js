@@ -44,8 +44,12 @@ function updateComposition(id, body){
     return new Promise(((resolve, reject) => {
         Composition.findById(id)
             .then((composition) => {
-                if(typeof body.moduleId != 'undefined')
-                    composition.moduleId = body.moduleId;
+                if(typeof body.moduleId != 'undefined') {
+                    if (body.moduleId == null)
+                        composition.moduleId = null;
+                    else
+                        composition.moduleId = mongoose.Types.ObjectId(body.moduleId);
+                }
                 composition.save()
                     .then((object) => {
                         resolve({status: 'UPDATED', composition: object});
