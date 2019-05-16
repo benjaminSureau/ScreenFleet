@@ -10,8 +10,8 @@
             <div class="list-tv" v-for="tv in tvList">
                 <v-flex pa-3>
                     <v-card
-                        v-bind:style="isSelected(tv) ? 'background :#483D8B': 'background :#FFFFFF'"
-                        v-on:click.native.stop="select(tv); show(tv)"
+                        v-bind:style="(selectedComposition === null && tv === selectedTv) ? 'background :#483D8B': 'background :#FFFFFF'"
+                        v-on:click.native.stop="select(tv)"
                         v-on:dblclick.native ="show(tv)">
                         <v-card-title class="justify-center">
                             <h3 class="headline mb-0" >{{tv.name}}</h3>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { selectedComposition } from './compositionFrame'
+import { EventBus } from '../Events.js';
 
 const tvList =[
     { name: 'TV 1', },
@@ -50,15 +50,25 @@ const tvList =[
 
 let tvCounter = 4;
 let selectedTv;
+let selectedComposition = null;
 
 export default {
     name: 'tvFrame',
+    mounted() {
+        EventBus.$on('selectComposition', composition => {
+            if (this.selectedComposition !== null && composition === null) {
+                this.selectedTv = null;
+            }
+            this.selectedComposition = composition;
+        });
+    },
     components: {
     },
     data() {
         return {
             tvList,
-            selectedTv
+            selectedTv,
+            selectedComposition
         };
     },
     computed: {
@@ -69,32 +79,34 @@ export default {
             tvList.push({_id: tvCounter, name: 'TV ' + tvCounter});
         },
         removeTv: function (tvList) {
-            tvList.pop();
-            if (tvCounter > 0) {
-                tvCounter--;
+            if (typeof selectedTv !== 'undefined' && selectedTv != null) {
+                apiTV.deleteTV(selectedTv._id)
+                    .then(() => {
+                        tvCounter--;
+                        for (let i = 0; i < tvList.length; i++) {
+                            if (tvList[i] === selectedTv) {
+                                tvList.splice(i,1);
+                            }
+                        }
+                    })
+                    .catch((err) => {
+                        alert(err);
+                    })
             }
-        },
-        show: function (tv) {
-            if (selectedComposition != null) {
-                tv.composition = selectedComposition;
-            }
-            this.$forceUpdate();
         },
         select: function (tv) {
-            if (selectedComposition === null) {
+            if (this.selectedComposition === null) {
                 if (tv === this.selectedTv) {
                     this.selectedTv = null;
                 } else {
                     this.selectedTv = tv;
                 }
             }
-        },
-        isSelected: function (tv) {
-            console.log(selectedComposition);
-            if (selectedComposition !== null) {
-                return false;
+            if (this.selectedComposition !== null) {
+                tv.composition = this.selectedComposition;
+                console.log(tv.composition );
             }
-            return (selectedComposition !== undefined && tv === this.selectedTv);
+            this.$forceUpdate();
         },
     }
 };

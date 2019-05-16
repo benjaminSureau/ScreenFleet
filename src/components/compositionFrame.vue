@@ -47,9 +47,12 @@
 
 <script>
 let compoCounter = 1;
-export var selectedComposition = null;
+let selectedComposition = null;
+
 import * as apiCompo from '../actions/compositionApi'
 import * as apiModule from '../actions/moduleApi'
+
+import { EventBus } from '../Events.js';
 
 export default {
     name: 'compositionFrame',
@@ -86,12 +89,12 @@ export default {
                 });
         },
         removeComposition: function (compositions) {
-            if (typeof selectedComposition !== 'undefined' && selectedComposition != null) {
-                apiCompo.deleteComposition(selectedComposition._id)
+            if (typeof this.selectedComposition !== 'undefined' && this.selectedComposition != null) {
+                apiCompo.deleteComposition(this.selectedComposition._id)
                     .then(() => {
                         compoCounter--;
                         for (let i = 0; i < compositions.length; i++) {
-                            if (compositions[i] === selectedComposition) {
+                            if (compositions[i] === this.selectedComposition) {
                                 compositions.splice(i,1);
                             }
                         }
@@ -111,13 +114,12 @@ export default {
                 })*/
         },
         select: function (composition) {
-            if (composition === selectedComposition) {
-                selectedComposition = null;
+            if (composition === this.selectedComposition) {
                 this.selectedComposition = null;
             } else {
-                selectedComposition = composition;
                 this.selectedComposition = composition;
             }
+            EventBus.$emit('selectComposition', this.selectedComposition);
         },
         test: function () {
             apiModule.createModule(
