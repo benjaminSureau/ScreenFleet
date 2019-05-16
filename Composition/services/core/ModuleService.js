@@ -9,7 +9,10 @@ function addModule(params) {
         module.numberOfSlides = params.numberOfSlides;
         module.splitMode = params.splitMode;
         module.resources = params.resources;
-        module.nextModuleId = mongoose.Types.ObjectId(params.nextModuleId);
+        if(params.nextModuleId == null)
+            module.nextModuleId = null;
+        else
+           module.nextModuleId = mongoose.Types.ObjectId(params.nextModuleId);
         module.save()
             .then((mod) => {
                 resolve(mod);
