@@ -26,7 +26,7 @@
         </v-layout>
 
         <v-card-actions>
-            <v-btn fab dark small v-on:click="removeComposition(compositions)">
+            <v-btn fab small v-on:click="removeComposition(compositions)" v-bind:dark="selectedComposition !== null" :disabled="selectedComposition === null">
                 <v-icon dark>remove</v-icon>
             </v-btn>
 
@@ -89,7 +89,7 @@ export default {
                 });
         },
         removeComposition: function (compositions) {
-            if (typeof this.selectedComposition !== 'undefined' && this.selectedComposition != null) {
+            if (typeof this.selectedComposition !== 'undefined' && this.selectedComposition !== null) {
                 apiCompo.deleteComposition(this.selectedComposition._id)
                     .then(() => {
                         compoCounter--;
@@ -98,6 +98,7 @@ export default {
                                 compositions.splice(i,1);
                             }
                         }
+                        this.selectedComposition = null;
                     })
                     .catch((err) => {
                         alert(err);

@@ -27,7 +27,7 @@
         </v-layout>
 
         <v-card-actions class="right">
-            <v-btn fab dark small v-on:click="removeTv(tvList)">
+            <v-btn fab dark small v-on:click="removeTv(tvList)" v-bind:dark="selectedTv !== null" :disabled="selectedTv === null">
                 <v-icon dark>remove</v-icon>
             </v-btn>
 
