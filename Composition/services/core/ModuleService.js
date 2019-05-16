@@ -90,10 +90,23 @@ function removeModule(id){
     }));
 }
 
+function getModuleParents(id) {
+    return new Promise(((resolve, reject) => {
+        Module.findByNextModId(id, (err, module) => {
+            if (!err) {
+                resolve({module});
+            } else {
+                reject({status: 'KO', error: err});
+            }
+        })
+    }));
+}
+
 module.exports = {
     addModule,
     getAll,
     getModule,
     updateModule,
-    removeModule
+    removeModule,
+    getModuleParents
 };

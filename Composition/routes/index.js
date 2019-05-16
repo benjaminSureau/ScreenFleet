@@ -37,6 +37,10 @@ router
     .get(ModuleController.getById);
 
 router
+    .route('/modules/nextModule/:id')
+    .get(ModuleController.getByNextModId);
+
+router
     .route('/resources/')
     .post(ResourceController.create)
     .get(ResourceController.getAll);

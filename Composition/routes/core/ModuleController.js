@@ -75,10 +75,26 @@ function remove(req, res) {
     }
 }
 
+function getByNextModId(req, res) {
+    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
+        ModuleService.getModuleParents(req.params.id)
+            .then(function(module){
+                if(module == null || typeof module == 'undefined') {
+                    return res.status(400);
+                }else{
+                    return res.status(200).json(module);
+                }})
+            .catch((error) => {
+                return res.sendStatus(400).json(error);
+            });
+    }
+}
+
 module.exports = {
     create,
     getAll,
     getById,
     update,
-    remove
+    remove,
+    getByNextModId
 };

@@ -11,4 +11,13 @@ const moduleSchema = new mongoose.Schema({
     nextModuleId: [ObjectId]
 });
 
+moduleSchema.statics.findByNextModId = function (id, cb) {
+    return this.find({
+        nextModuleId: {
+            $in: id
+        }
+    })
+        .exec(cb);
+};
+
 module.exports = mongoose.model('Modules', moduleSchema, 'Modules');
