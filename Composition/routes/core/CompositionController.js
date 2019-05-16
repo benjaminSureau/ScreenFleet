@@ -2,7 +2,7 @@ const CompositionService = require('../../services/core/CompositionService');
 const mongoose = require('mongoose');
 
 async function create(req, res) {
-    if (req.body.moduleId == null) {
+    if (true) {
         let composition = await CompositionService.addComposition(req.body);
         return res.status(201).send(composition);
     } else {

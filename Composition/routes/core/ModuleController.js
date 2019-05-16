@@ -2,8 +2,7 @@ const ModuleService = require('../../services/core/ModuleService');
 const mongoose = require('mongoose');
 
 async function create(req, res) {
-    if (req.body.type != null && req.body.mode != null && req.body.numberOfSlides != null && req.body.splitMode != null
-    && (req.body.nextModuleId == null || mongoose.Types.ObjectId.isValid(req.body.nextModuleId))) {
+    if (req.body.type != null) {
         let module = await ModuleService.addModule(req.body);
         return res.status(201).send(module);
     } else {
