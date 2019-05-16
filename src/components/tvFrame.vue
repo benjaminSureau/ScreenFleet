@@ -56,9 +56,7 @@ export default {
     name: 'tvFrame',
     mounted() {
         EventBus.$on('selectComposition', composition => {
-            if (this.selectedComposition !== null && composition === null) {
-                this.selectedTv = null;
-            }
+            this.selectedTv = null;
             this.selectedComposition = composition;
         });
     },
