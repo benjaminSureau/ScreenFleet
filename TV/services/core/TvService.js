@@ -5,7 +5,10 @@ function addTv(params, port) {
     return new Promise((resolve, reject) => {{
         let tv = new Tv();
         tv.port = port;
-        tv.compositionId = mongoose.Types.ObjectId(params.compositionId);
+        if(params.compositionId == null)
+            tv.compositionId = null;
+        else
+           tv.compositionId = mongoose.Types.ObjectId(params.compositionId);
         tv.save()
             .then((tv) => {
                 resolve(tv);
