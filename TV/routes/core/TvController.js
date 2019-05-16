@@ -52,19 +52,17 @@ function getById(req, res) {
 }
 
 function update(req, res){
-    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
-        TvService.updateTv(req.params.id, req.body)
-            .then(function(tv){
-                if(tv == null || typeof tv == 'undefined') {
-                    return res.status(400);
-                }else{
-                    return res.status(200).json(tv);
-                }
-            })
-            .catch((error) => {
-                return res.sendStatus(400).json(error);
-            });
-    }
+    TvService.updateTv(req.params.id, req.body)
+        .then(function(tv){
+            if(tv == null || typeof tv == 'undefined') {
+                return res.status(400);
+            }else{
+                return res.status(200).json(tv);
+            }
+        })
+        .catch((error) => {
+            return res.sendStatus(400).json(error);
+        });
 }
 
 function remove(req, res) {
