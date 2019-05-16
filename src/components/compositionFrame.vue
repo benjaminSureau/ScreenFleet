@@ -146,4 +146,7 @@ export default {
 </script>
 
 <style scoped>
+    .v-icon {
+        display: inline-flex !important;
+    }
 </style>
