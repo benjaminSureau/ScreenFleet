@@ -59,8 +59,16 @@ function updateModule(id, body){
                     module.splitMode = body.splitMode;
                 if(typeof body.resources != 'undefined')
                     module.resources = body.resources;
-                if(typeof body.nextModuleId != 'undefined')
-                    module.nextModuleId = body.nextModuleId;
+                if(typeof body.nextModuleId != 'undefined') {
+                    if(body.nextModuleId == null)
+                        module.nextModuleId = null;
+                    else {
+                        module.nextModuleId = [];
+                        body.nextModuleId.forEach(function(mod) {
+                            module.nextModuleId.push(mongoose.Types.ObjectId(mod));
+                        });
+                    }
+                }
                 module.save()
                     .then((object) => {
                         resolve({status: 'UPDATED', module: object});
