@@ -12,7 +12,7 @@ function addModule(params) {
         if(params.nextModuleId == null)
             module.nextModuleId = null;
         else
-           module.nextModuleId = mongoose.Types.ObjectId(params.nextModuleId);
+            module.nextModuleId = mongoose.Types.ObjectId(params.nextModuleId);
         module.save()
             .then((mod) => {
                 resolve(mod);
