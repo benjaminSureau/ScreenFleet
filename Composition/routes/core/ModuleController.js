@@ -25,21 +25,17 @@ function getAll(req, res) {
 }
 
 function update(req, res) {
-    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)
-        && req.body.type != null && req.body.mode != null && req.body.splitMode != null
-        && req.body.numberOfSlides != null) {
-        ModuleService.updateModule(req.params.id, req.body)
-            .then(function(module){
-                if(module == null || typeof module == 'undefined') {
-                    return res.status(400);
-                }else{
-                    return res.status(200).json(module);
-                }
-            })
-            .catch((error) => {
-                return res.sendStatus(400).json(error);
-            });
-    }
+    ModuleService.updateModule(req.params.id, req.body)
+        .then(function(module){
+            if(module == null || typeof module == 'undefined') {
+                return res.status(400);
+            }else{
+                return res.status(200).json(module);
+            }
+        })
+        .catch((error) => {
+            return res.sendStatus(400).json(error);
+        });
 }
 
 function getById(req, res) {

@@ -40,19 +40,17 @@ function getById(req, res) {
 }
 
 function update(req, res) {
-    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
-        ResourceService.updateResource(req.params.id, req.body)
-            .then(function(resource){
-                if(resource == null || typeof resource == 'undefined') {
-                    return res.status(400);
-                }else{
-                    return res.status(200).json(resource);
-                }
-            })
-            .catch((error) => {
-                return res.sendStatus(400).json(error);
-            });
-    }
+    ResourceService.updateResource(req.params.id, req.body)
+        .then(function(resource){
+            if(resource == null || typeof resource == 'undefined') {
+                return res.status(400);
+            }else{
+                return res.status(200).json(resource);
+            }
+        })
+        .catch((error) => {
+            return res.sendStatus(400).json(error);
+        });
 }
 
 function remove(req, res) {

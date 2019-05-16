@@ -40,20 +40,17 @@ function getById(req, res) {
 }
 
 function update(req, res) {
-    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)
-        && mongoose.Types.ObjectId.isValid(req.body.moduleId)) {
-        CompositionService.updateComposition(req.params.id, req.body)
-            .then(function(composition){
-                if(composition == null || typeof composition == 'undefined') {
-                    return res.status(400);
-                }else{
-                    return res.status(200).json(composition);
-                }
-            })
-            .catch((error) => {
-                return res.sendStatus(400).json(error);
-            });
-    }
+    CompositionService.updateComposition(req.params.id, req.body)
+        .then(function(composition){
+            if(composition == null || typeof composition == 'undefined') {
+                return res.status(400);
+            }else{
+                return res.status(200).json(composition);
+            }
+        })
+        .catch((error) => {
+            return res.sendStatus(400).json(error);
+        });
 }
 
 function remove(req, res) {
