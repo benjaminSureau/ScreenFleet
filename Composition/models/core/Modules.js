@@ -8,7 +8,7 @@ const moduleSchema = new mongoose.Schema({
     numberOfSlides: Number,
     splitMode: String,//['HORIZONTAL', 'VERTICAL'],
     resources: Resource,
-    nextModuleId: ObjectId
+    nextModuleId: [ObjectId]
 });
 
 module.exports = mongoose.model('Modules', moduleSchema, 'Modules');
