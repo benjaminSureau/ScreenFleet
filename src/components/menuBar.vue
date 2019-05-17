@@ -3,7 +3,7 @@
         <v-toolbar-side-icon v-on:click="goHome()">
             <v-icon x-large>home</v-icon>
         </v-toolbar-side-icon>
-        <v-toolbar-title>SORFYP</v-toolbar-title>
+        <v-toolbar-title>ScreenFleet</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat @click="seeResources">Resources</v-btn>
