@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import MainFrame from '@/components/mainFrame';
 import EditComposition from '@/components/compositionEditFrame';
+import ResourcesView from '@/components/ResourcesView/resourcesMainFrame';
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(Router);
@@ -20,6 +21,11 @@ export default new Router({
 			name: 'EditComposition',
 			component: EditComposition,
             props: true
+		},
+		{
+			path: '/ResourcesView',
+			name: 'ResourcesView',
+			component: ResourcesView,
 		}
 	]
 });

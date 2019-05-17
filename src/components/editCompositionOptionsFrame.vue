@@ -26,7 +26,7 @@
             </v-layout>
             <v-layout row wrap>
                 <v-flex xs6>
-                    <div>Split in fourth
+                    <div>Split in four
                         <v-btn fab dark small v-on:click="splitToFourth()">
                             <v-icon dark>fullscreen_exit</v-icon>
                         </v-btn>
@@ -159,82 +159,38 @@ export default {
             EventBus.$emit('splitHorizontally', this.count);
 
 
-
-            /*apiModule.createModule()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
         },
         splitVertically(){
-            /*apiModule.createModule()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('splitVertically', 12);
+
         },
         splitToFourth(){
-            /*apiModule.createModule()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('splitToFourth', 12);
+
         },
         insertSlide(){
-            /*apiModule.createModule()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('insertSlide', 12);
+
         },
 
 // resources creation
         insertStream(){
+            EventBus.$emit('insertStream', 12);
 
-            /*apiMResource.createResource()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+
         },
         insertVideo(){
-            /*apiMResource.createResource()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('insertVideo', 12);
+
         },
         insertImage(){
-            /*apiMResource.createResource()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('insertImage', 12);
+
         },
 // delete object
 
         deleteContent(id,type){
-            /*apiMResource.createResource()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+
         }
     }
 };
