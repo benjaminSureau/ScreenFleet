@@ -18,7 +18,7 @@
                         </v-card-title>
                         <v-card-title primary-title class="justify-center">
                             <div>
-                                <h3 class="headline mb-0">{{typeof tv.composition==='undefined' ? 'Vide' : tv.composition.name}}</h3>
+                                <h3 class="headline mb-0">{{(typeof tv.composition==='undefined' || tv.composition === null)  ? 'Vide' : tv.composition.name}}</h3>
                             </div>
                         </v-card-title>
                     </v-card>
@@ -27,6 +27,11 @@
         </v-layout>
 
         <v-card-actions class="right">
+
+            <v-btn fab dark small v-on:click="clearTv()" v-bind:dark="selectedTv !== null" :disabled="selectedTv === null">
+                <v-icon dark>clear</v-icon>
+            </v-btn>
+
             <v-btn fab dark small v-on:click="removeTv()" v-bind:dark="selectedTv !== null" :disabled="selectedTv === null">
                 <v-icon dark>remove</v-icon>
             </v-btn>
@@ -69,14 +74,14 @@ export default {
             this.tvList.forEach((tv, index) => {
                 tv.name = 'TV ' + tv._id.slice(-4);
                 tv.number = index + 1;
-                promises.push(compositionApi.getCompositionById(tv.compositionId));
+                let id = tv.compositionId === null ? "000000000000000000000000" : tv.compositionId;
+                promises.push(compositionApi.getCompositionById(id));
                 tvIndex.push(index);
             });
             let results = await Promise.all(promises);
             results.forEach((result, index) => {
-                console.log(result.data.composition);
-                result.data.composition.name = 'Composition ' + result.data.composition._id.slice(-4);
                 if (this.tvList[index].compositionId != null ) {
+                    result.data.composition.name = 'Composition ' + result.data.composition._id.slice(-4);
                     this.tvList[index].composition = result.data.composition;
                 }
             });
@@ -119,7 +124,6 @@ export default {
             }
         },
         select: function (tv) {
-            console.log(tv);
             if (this.selectedComposition === null) {
                 if (tv === null || tv === this.selectedTv) {
                     this.selectedTv = null;
@@ -133,10 +137,20 @@ export default {
                     compositionId : this.selectedComposition._id
                 };
                 apiTV.putTV(tv._id, data);
-                console.log(tv.composition );
             }
             this.$forceUpdate();
         },
+        clearTv: function () {
+            if (this.selectedTv !== null) {
+                this.selectedTv.composition = null;
+                let data = {
+                    compositionId : null
+                };
+                apiTV.putTV(this.selectedTv._id, data).then(() => {
+                    this.$forceUpdate();
+                });
+            }
+        }
     }
 };
 </script>
