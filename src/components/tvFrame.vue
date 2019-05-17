@@ -40,6 +40,7 @@
 
 <script>
 import { EventBus } from '../Events.js';
+import * as apiTV from '../actions/tvApi';
 
 const tvList =[
     { name: 'TV 1', },
@@ -73,8 +74,14 @@ export default {
     },
     methods: {
         addTv: function (tvList) {
-            tvCounter++;
-            tvList.push({_id: tvCounter, name: 'TV ' + tvCounter});
+            apiTV.createTV()
+                .then((res) => {
+                    tvCounter++;
+                    tvList.push({_id: res.data._id, name: 'Tv ' + res.data._id.slice(-4), number: tvCounter});
+                })
+                .catch((err) => {
+                    alert(err);
+                });
         },
         removeTv: function (tvList) {
             if (typeof selectedTv !== 'undefined' && selectedTv != null) {
