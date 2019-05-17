@@ -16,7 +16,7 @@
                         <v-card-title class="justify-center">
                             <h3 class="headline mb-0" >{{tv.name}}</h3>
                         </v-card-title>
-                        <v-card-title primary-title>
+                        <v-card-title primary-title class="justify-center">
                             <div>
                                 <h3 class="headline mb-0">{{typeof tv.composition==='undefined' ? 'Vide' : tv.composition.name}}</h3>
                             </div>
@@ -27,11 +27,11 @@
         </v-layout>
 
         <v-card-actions class="right">
-            <v-btn fab dark small v-on:click="removeTv(tvList)" v-bind:dark="selectedTv !== null" :disabled="selectedTv === null">
+            <v-btn fab dark small v-on:click="removeTv()" v-bind:dark="selectedTv !== null" :disabled="selectedTv === null">
                 <v-icon dark>remove</v-icon>
             </v-btn>
 
-            <v-btn fab dark small v-on:click="addTv(tvList)">
+            <v-btn fab dark small v-on:click="addTv()">
                 <v-icon dark>add</v-icon>
             </v-btn>
         </v-card-actions>
@@ -41,58 +41,77 @@
 <script>
 import { EventBus } from '../Events.js';
 import * as apiTV from '../actions/tvApi';
+import * as compositionApi from '../actions/compositionApi';
 
-const tvList =[
-    { name: 'TV 1', },
-    { name: 'TV 2', },
-    { name: 'TV 3', },
-    { name: 'TV 4', }
-];
 
-let tvCounter = 4;
+let tvCounter = 0;
 let selectedTv = null;
 let selectedComposition = null;
 
 export default {
     name: 'tvFrame',
+    data() {
+        return {
+            tvList : [],
+            selectedTv,
+            selectedComposition
+        };
+    },
     mounted() {
         EventBus.$on('selectComposition', composition => {
             this.selectedTv = null;
             this.selectedComposition = composition;
         });
+        apiTV.getTV().then(async (result) => {
+            this.tvList = result.data.tvs;
+            let tvIndex = [];
+            let promises = [];
+            this.tvList.forEach((tv, index) => {
+                tv.name = 'TV ' + tv._id.slice(-4);
+                tv.number = index + 1;
+                promises.push(compositionApi.getCompositionById(tv.compositionId));
+                tvIndex.push(index);
+            });
+            let results = await Promise.all(promises);
+            results.forEach((result, index) => {
+                console.log(result.data.composition);
+                result.data.composition.name = 'Composition ' + result.data.composition._id.slice(-4);
+                if (this.tvList[index].compositionId != null ) {
+                    this.tvList[index].composition = result.data.composition;
+                }
+            });
+            this.$forceUpdate();
+            this.tvCounter = this.tvList.length;
+        }, error => {
+            console.error(error);
+        });
     },
     components: {
-    },
-    data() {
-        return {
-            tvList,
-            selectedTv,
-            selectedComposition
-        };
     },
     computed: {
     },
     methods: {
-        addTv: function (tvList) {
+        addTv: function () {
             apiTV.createTV()
                 .then((res) => {
-                    tvCounter++;
-                    tvList.push({_id: res.data._id, name: 'Tv ' + res.data._id.slice(-4), number: tvCounter});
+                    this.tvCounter++;
+                    this.tvList.push({_id: res.data._id, name: 'Tv ' + res.data._id.slice(-4), number: this.tvCounter});
                 })
                 .catch((err) => {
                     alert(err);
                 });
         },
-        removeTv: function (tvList) {
-            if (typeof selectedTv !== 'undefined' && selectedTv != null) {
-                apiTV.deleteTV(selectedTv._id)
+        removeTv: function () {
+            if (typeof this.selectedTv !== 'undefined' && this.selectedTv != null) {
+                apiTV.deleteTV(this.selectedTv._id)
                     .then(() => {
-                        tvCounter--;
-                        for (let i = 0; i < tvList.length; i++) {
-                            if (tvList[i] === selectedTv) {
-                                tvList.splice(i,1);
+                        this.tvCounter--;
+                        for (let i = 0; i < this.tvList.length; i++) {
+                            if (this.tvList[i] === this.selectedTv) {
+                                this.tvList.splice(i,1);
                             }
                         }
+                        this.selectedTv = null;
                     })
                     .catch((err) => {
                         alert(err);
@@ -100,15 +119,20 @@ export default {
             }
         },
         select: function (tv) {
+            console.log(tv);
             if (this.selectedComposition === null) {
-                if (tv === this.selectedTv) {
+                if (tv === null || tv === this.selectedTv) {
                     this.selectedTv = null;
                 } else {
                     this.selectedTv = tv;
                 }
             }
-            if (this.selectedComposition !== null) {
+            if (this.selectedComposition !== null && tv !== null) {
                 tv.composition = this.selectedComposition;
+                let data = {
+                    compositionId : this.selectedComposition._id
+                };
+                apiTV.putTV(tv._id, data);
                 console.log(tv.composition );
             }
             this.$forceUpdate();

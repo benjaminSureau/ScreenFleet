@@ -11,6 +11,10 @@ export function getCompositions() {
     return instance.get('/api/compositions');
 }
 
+export function getCompositionById(id) {
+    return instance.get(`/api/compositions/${id}`);
+}
+
 export function createComposition() {
     return instance.post('/api/compositions', {
         moduleId: null
