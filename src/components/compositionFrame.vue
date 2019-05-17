@@ -26,7 +26,7 @@
         </v-layout>
 
         <v-card-actions>
-            <v-btn fab dark small v-on:click="removeComposition(compositions)">
+            <v-btn fab small v-on:click="removeComposition(compositions)" v-bind:dark="selectedComposition !== null" :disabled="selectedComposition === null">
                 <v-icon dark>remove</v-icon>
             </v-btn>
 
@@ -47,9 +47,13 @@
 
 <script>
 let compoCounter = 1;
-export var selectedComposition = null;
+let selectedComposition = null;
+
 import * as apiCompo from '../actions/compositionApi'
 import * as apiModule from '../actions/moduleApi'
+import router from '../router/index';
+
+import { EventBus } from '../Events.js';
 
 export default {
     name: 'compositionFrame',
@@ -86,15 +90,17 @@ export default {
                 });
         },
         removeComposition: function (compositions) {
-            if (typeof selectedComposition !== 'undefined' && selectedComposition != null) {
-                apiCompo.deleteComposition(selectedComposition._id)
+            if (typeof this.selectedComposition !== 'undefined' && this.selectedComposition !== null) {
+                apiCompo.deleteComposition(this.selectedComposition._id)
                     .then(() => {
                         compoCounter--;
                         for (let i = 0; i < compositions.length; i++) {
-                            if (compositions[i] === selectedComposition) {
+                            if (compositions[i] === this.selectedComposition) {
                                 compositions.splice(i,1);
                             }
                         }
+                        this.selectedComposition = null;
+                        EventBus.$emit('selectComposition', this.selectedComposition);
                     })
                     .catch((err) => {
                         alert(err);
@@ -111,13 +117,15 @@ export default {
                 })*/
         },
         select: function (composition) {
-            if (composition === selectedComposition) {
-                selectedComposition = null;
+            if (composition === this.selectedComposition) {
                 this.selectedComposition = null;
             } else {
-                selectedComposition = composition;
                 this.selectedComposition = composition;
             }
+            EventBus.$emit('selectComposition', this.selectedComposition);
+        },
+        modify: function (composition) {
+            router.push({ name: 'EditComposition', params: { id: composition._id } })
         },
         test: function () {
             apiModule.createModule(
@@ -143,4 +151,7 @@ export default {
 </script>
 
 <style scoped>
+    .v-icon {
+        display: inline-flex !important;
+    }
 </style>

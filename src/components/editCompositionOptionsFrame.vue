@@ -5,7 +5,7 @@
         <v-card height="25%">
             <v-card-title primary-title>
                 <div>
-                    <h3 class="headline mb-0">Split Element</h3>
+                    <h3 class="headline mb-0">Multi</h3>
                 </div>
             </v-card-title>
             <v-layout row wrap>
@@ -26,7 +26,7 @@
             </v-layout>
             <v-layout row wrap>
                 <v-flex xs6>
-                    <div>Split in fourth
+                    <div>Split in four
                         <v-btn fab dark small v-on:click="splitToFourth()">
                             <v-icon dark>fullscreen_exit</v-icon>
                         </v-btn>
@@ -45,7 +45,7 @@
         <v-card height="25%">
             <v-card-title primary-title>
                 <div>
-                    <h3 class="headline mb-0">Insert Element</h3>
+                    <h3 class="headline mb-0">Base</h3>
                 </div>
             </v-card-title>
             <v-layout row wrap>
@@ -96,6 +96,7 @@
 <script>
 import * as apiCompo from '../actions/compositionApi'
 import * as apiModule from '../actions/moduleApi'
+import { EventBus } from '../Events.js';
 
 let tvCounter = 4;
 
@@ -109,14 +110,18 @@ export default {
             id: null,
             composition : null,
             firtsModule : null,
+            count: 8
+
         };
     },
     mounted() {
-        apiCompo.getCompositions("5cdc0fe1943dbc31545d1eda")
+        console.log( this.$route.params.id );
+
+        apiCompo.getCompositions(this.$route.params.id)
             .then((res) => {
                 this.composition = res.data.composition;
                 console.log(this.composition);
-                console.log(this.composition.moduleId);
+                //console.log(this.composition.moduleId);
 
                 /*if ( this.composition.moduleId == null) {
                     console.log("create module");
@@ -151,86 +156,48 @@ export default {
 
 // module creation
         splitHorizontally(){
-            /*apiModule.createModule()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('splitHorizontally', this.count);
+
+
         },
         splitVertically(){
-            /*apiModule.createModule()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('splitVertically', 12);
+
         },
         splitToFourth(){
-            /*apiModule.createModule()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('splitToFourth', 12);
+
         },
         insertSlide(){
-            /*apiModule.createModule()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('insertSlide', 12);
+
         },
 
 // resources creation
         insertStream(){
+            EventBus.$emit('insertStream', 12);
 
-            /*apiMResource.createResource()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+
         },
         insertVideo(){
-            /*apiMResource.createResource()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('insertVideo', 12);
+
         },
         insertImage(){
-            /*apiMResource.createResource()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+            EventBus.$emit('insertImage', 12);
+
         },
 // delete object
 
         deleteContent(id,type){
-            /*apiMResource.createResource()
-                .then((res) => {
-                    //todo...
-                })
-                .catch((err) => {
-                    alert(err);
-                });*/
+
         }
     }
 };
 </script>
 
 <style scoped>
-
+    .v-icon {
+        display: inline-flex !important;
+    }
 </style>
