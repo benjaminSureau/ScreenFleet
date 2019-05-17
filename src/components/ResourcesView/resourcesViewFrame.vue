@@ -5,7 +5,10 @@
 
             <v-layout row wrap align-center style="height: 100%">
                 <v-flex xs12>
-                    <img :src="imageUrl" v-if="imageUrl" style="max-height: 100%; max-width: 100%"/>
+                    <img alt="resource to add" :src="imageUrl" v-if="imageUrl" style="max-height: 100%; max-width: 100%"/>
+                    <video :autoplay="true" :loop="true" v-if="videoUrl" >
+                        <source :src="videoUrl" type="video/mp4"/>
+                    </video>
                 </v-flex>
             </v-layout>
 
@@ -17,14 +20,13 @@
                 <v-flex xs1>
                 </v-flex>
                 <v-flex xs9>
-                    <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'/>
+                    <v-text-field label="Select Image" @click='pickFile' v-model='fileName' prepend-icon='attach_file'/>
                     <input
                         type="file"
                         style="display: none"
                         ref="image"
-                        accept="image/*"
-                        @change="onFilePicked"
-                    >
+                        accept="image/*,video/*"
+                        @change="onFilePicked">
                 </v-flex>
                 <v-flex xs1>
                     <v-btn flat icon v-on:click="saveFromLocal()">
@@ -75,7 +77,8 @@ export default {
             url: null,
             currentView: '',
             imageUrl: '',
-            imageName: '',
+            fileName: '',
+            videoUrl: '',
         }
     },
     mounted() {
@@ -100,18 +103,23 @@ export default {
             this.$refs.image.click();
         },
         onFilePicked (e) {
+            this.videoUrl = '';
+            this.fileName = '';
+            this.imageUrl = '';
             this.currentView = 'local';
             const files = e.target.files;
             if(files[0] !== undefined) {
                 const fr = new FileReader();
                 fr.readAsDataURL(files[0]);
                 fr.addEventListener('load', () => {
-                    this.imageUrl = fr.result; // this is an image file that can be sent to server...
-                    this.imageName = files[0].name;
+                    if (files[0].type.slice(0, 5) === "image") {
+                        this.imageUrl = fr.result; // this is an image file that can be sent to server...
+                        this.fileName = files[0].name;
+                    } else {
+                        this.videoUrl = fr.result;
+                        this.fileName = files[0].name;
+                    }
                 });
-            } else {
-                this.imageUrl = '';
-                this.imageName = '';
             }
         }
     }
