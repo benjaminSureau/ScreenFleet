@@ -3,10 +3,9 @@
         <v-card height="70%">
             <!--<img style="width: 100%; height: auto" src="https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"/>-->
 
-            <v-layout row wrap align-center>
+            <v-layout row wrap align-center style="height: 100%">
                 <v-flex xs12>
-                    <img :src="localImageUrl" v-if="localImageUrl"/>
-                    <img :src="fileUrl" style="max-height: 100%; max-width: 100%"/>
+                    <img :src="imageUrl" v-if="imageUrl" style="max-height: 100%; max-width: 100%"/>
                 </v-flex>
             </v-layout>
 
@@ -18,7 +17,7 @@
                 <v-flex xs1>
                 </v-flex>
                 <v-flex xs9>
-                    <v-text-field label="Select Image" @click='pickFile' v-model='localImageName' prepend-icon='attach_file'></v-text-field>
+                    <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'/>
                     <input
                         type="file"
                         style="display: none"
@@ -47,7 +46,8 @@
                         label="url"
                         single-line
                         solo
-                    ></v-text-field>
+                        v-on:keyup.enter="previewFile()"
+                    />
                 </v-flex>
 
                 <v-flex xs2>
@@ -74,10 +74,8 @@ export default {
             value: 0,
             url: null,
             currentView: '',
-            localImageName: '',
-            localImageUrl: '',
-            localImageFile: '',
-            fileUrl: '',
+            imageUrl: '',
+            imageName: '',
         }
     },
     mounted() {
@@ -88,42 +86,32 @@ export default {
     computed: {
     },
     methods: {
-        test(){
-            console.log("test");
-        },
         saveUrl(){
             EventBus.$emit('passUrl', this.url);
         },
         previewFile(){
             this.currentView = 'imageUrl';
-            this.fileUrl = this.url;
-
+            this.imageUrl = this.url; // this is an image file that can be sent to server...
         },
         saveFromLocal(){
             EventBus.$emit('passLocalImage', [this.localImageName, this.localImageFile, this.localImageUrl]);
-
         },
         pickFile () {
-            this.$refs.image.click ()
+            this.$refs.image.click();
         },
         onFilePicked (e) {
             this.currentView = 'local';
             const files = e.target.files;
             if(files[0] !== undefined) {
-                this.localImageName = files[0].name;
-                if(this.localImageName.lastIndexOf('.') <= 0) {
-                    return
-                }
-                const fr = new FileReader ();
+                const fr = new FileReader();
                 fr.readAsDataURL(files[0]);
                 fr.addEventListener('load', () => {
-                    this.localImageUrl = fr.result;
-                    this.localImageFile = files[0]; // this is an image file that can be sent to server...
-                })
+                    this.imageUrl = fr.result; // this is an image file that can be sent to server...
+                    this.imageName = files[0].name;
+                });
             } else {
-                this.localImageName = '';
-                this.localImageFile = '';
-                this.localImageUrl = '';
+                this.imageUrl = '';
+                this.imageName = '';
             }
         }
     }
