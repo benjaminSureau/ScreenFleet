@@ -2,12 +2,21 @@ const Tv = require('../../models/core/TVs');
 const mongoose = require('mongoose');
 
 function addTv(params, port) {
-    let tv = new Tv();
-    tv.port = port;
-    tv.compositionId = mongoose.Types.ObjectId(params.compositionId);
-    tv.save().then(function () {
-        return tv;
-    });
+    return new Promise((resolve, reject) => {{
+        let tv = new Tv();
+        tv.port = port;
+        if(params.compositionId == null)
+            tv.compositionId = null;
+        else
+           tv.compositionId = mongoose.Types.ObjectId(params.compositionId);
+        tv.save()
+            .then((tv) => {
+                resolve(tv);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    }});
 }
 
 function getAll() {

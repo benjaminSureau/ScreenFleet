@@ -6,16 +6,16 @@ const DEFAULT_PORT = 3002;
 let ports = [];
 
 
-function create(req, res) {
+async function create(req, res) {
     if (req.body.port == null && (req.body.compositionId == null || mongoose.Types.ObjectId.isValid(req.body.compositionId))) {
         let port = DEFAULT_PORT;
         if (ports.length > 0) {
             port = ports[ports.length - 1] + 1;
         }
-        let tv = TvService.addTv(req.body, port);
+        let tv = await TvService.addTv(req.body, port);
         ports.push(tv.port);
         exec('../Screen/npm start -- ' + tv.port);
-        return res.status(201).send({tv:tv});
+        return res.status(201).send(tv);
     } else {
         return res.status(400);
     }
@@ -27,11 +27,11 @@ function getAll(req, res) {
             if (tvs == null || typeof tvs == 'undefined') {
                 return res.status(400);
             } else {
-                return res.status(200).json({tv: tvs});
+                return res.status(200).json(tvs);
             }
         })
         .catch((error) => {
-            return res.sendStatus(400).json({error:error});
+            return res.sendStatus(400).json(error);
         });
 }
 
@@ -42,28 +42,26 @@ function getById(req, res) {
                 if(tv == null || typeof tv == 'undefined') {
                     return res.status(400);
                 }else{
-                    return res.status(200).json({tv: tv});
+                    return res.status(200).json(tv);
                 }})
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }
 
 function update(req, res){
-    if (req.params.id != null && mongoose.Types.ObjectId.isValid(req.params.id)) {
-        TvService.updateTv(req.params.id, req.body)
-            .then(function(tv){
-                if(tv == null || typeof tv == 'undefined') {
-                    return res.status(400);
-                }else{
-                    return res.status(200).json({tv: tv});
-                }
-            })
-            .catch((error) => {
-                return res.sendStatus(400).json({error:error});
-            });
-    }
+    TvService.updateTv(req.params.id, req.body)
+        .then(function(tv){
+            if(tv == null || typeof tv == 'undefined') {
+                return res.status(400);
+            }else{
+                return res.status(200).json(tv);
+            }
+        })
+        .catch((error) => {
+            return res.sendStatus(400).json(error);
+        });
 }
 
 function remove(req, res) {
@@ -73,11 +71,11 @@ function remove(req, res) {
                 if(tv == null || typeof tv == 'undefined') {
                     return res.status(400);
                 } else{
-                    return res.status(200).json({tv: tv});
+                    return res.status(200).json(tv);
                 }
             })
             .catch((error) => {
-                return res.sendStatus(400).json({error:error});
+                return res.sendStatus(400).json(error);
             });
     }
 }

@@ -4,11 +4,15 @@
   "description": "???",
   "scripts": {
     "start": "node ./app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha tests/test.js",
     "lint": "./node_modules/.bin/eslint  models/core/*.js routes/core/*.js services/core/*.js"
   },
   "author": "Benjamin Sureau",
   "license": "yteytey",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "*"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
