@@ -51,6 +51,7 @@ let selectedComposition = null;
 
 import * as apiCompo from '../actions/compositionApi'
 import * as apiModule from '../actions/moduleApi'
+import router from '../router/index';
 
 import { EventBus } from '../Events.js';
 
@@ -122,6 +123,9 @@ export default {
                 this.selectedComposition = composition;
             }
             EventBus.$emit('selectComposition', this.selectedComposition);
+        },
+        modify: function (composition) {
+            router.push({ name: 'EditComposition', params: { id: composition._id } })
         },
         test: function () {
             apiModule.createModule(

@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import MainFrame from '@/components/mainFrame';
 import EditComposition from '@/components/compositionEditFrame';
 import ResourcesView from '@/components/ResourcesView/resourcesMainFrame';
+import TvView from '@/components/screen';
+
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(Router);
@@ -26,6 +28,11 @@ export default new Router({
 			path: '/ResourcesView',
 			name: 'ResourcesView',
 			component: ResourcesView,
-		}
+		},
+        {
+            path: '/ShowTv',
+            name: 'ShowTv',
+            component: TvView,
+        }
 	]
 });

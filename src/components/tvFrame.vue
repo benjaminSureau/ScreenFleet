@@ -12,7 +12,7 @@
                     <v-card
                         v-bind:style="(selectedComposition === null && tv === selectedTv) ? 'background :#483D8B': 'background :#FFFFFF'"
                         v-on:click.native.stop="select(tv)"
-                        v-on:dblclick.native ="show(tv)">
+                        v-on:dblclick.native.stop ="show(tv)">
                         <v-card-title class="justify-center">
                             <h3 class="headline mb-0" >{{tv.name}}</h3>
                         </v-card-title>
@@ -47,7 +47,7 @@
 import { EventBus } from '../Events.js';
 import * as apiTV from '../actions/tvApi';
 import * as compositionApi from '../actions/compositionApi';
-
+import router from '../router/index';
 
 let tvCounter = 0;
 let selectedTv = null;
@@ -150,6 +150,9 @@ export default {
                     this.$forceUpdate();
                 });
             }
+        },
+        show: function (tv) {
+            router.push({ name: 'ShowTv', params: { id: tv._id } })
         }
     }
 };
