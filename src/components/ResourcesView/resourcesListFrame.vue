@@ -6,9 +6,13 @@
                     <h3 class="headline mb-0">Resources List</h3>
                 </div>
             </v-card-title>
-            <v-card-text>
-
-            </v-card-text>
+            <v-list v-for="resource in items" :key="resource.url">
+                <v-list-tile @click="showImage(resource)">
+                    <v-list-tile-content>
+                        <v-list-tile-title v-html="resource.name"/>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
         </v-card>
 
     </div>
@@ -29,10 +33,10 @@ export default {
         return {
             id: null,
             items: [
-                'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-                'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-                'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-                'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+                {name: "squirrel", file : "", url :'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'},
+                {name: "sky", file : "", url :'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'},
+                {name: "bird", file : "", url :'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'},
+                {name: "planet", file : "", url :'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'}
             ]
 
         };
@@ -58,6 +62,9 @@ export default {
         addImageFromLocal(data){
             //todo...
         },
+        showImage(image) {
+            //todo...
+        }
 
     }
 };
