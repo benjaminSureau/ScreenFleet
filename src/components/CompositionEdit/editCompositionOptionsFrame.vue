@@ -156,7 +156,6 @@ export default {
         };
     },
     mounted() {
-        this.dataToSend = {id: 'a1',type: null, number: null, data: null, isParent: false, submodules: null};
         EventBus.$emit('sendData', this.dataToSend);
 
 
@@ -170,7 +169,7 @@ export default {
             });
 
         EventBus.$on('provideCurrentModule', data => {
-            this.currentData = data;
+            this.id = data;
             //console.log(this.currentData);
 
         });
@@ -186,22 +185,22 @@ export default {
 // module creation
         async splitHorizontally(){
             let res = actionModule.createSplitHorizontally(this.id);
-            EventBus.$emit('sendData', this.dataToSend);
+            this.generateJson();
 
         },
         async splitVertically(){
             let res = actionModule.createSplitVertically(this.id);
-            EventBus.$emit('sendData', this.dataToSend);
+            this.generateJson();
 
         },
         async splitToFourth(){
             let res = actionModule.createSplitToFourth(this.id);
-            EventBus.$emit('sendData', this.dataToSend);
+            this.generateJson();
 
         },
         async insertSlide(){
-            let res = actionModule.createSplitSlide(this.id);
-            EventBus.$emit('sendData', this.dataToSend);
+            let res = actionModule.createSplitSlide(this.id, 5);
+            this.generateJson();
 
         },
 
@@ -215,9 +214,12 @@ export default {
             EventBus.$emit('sendData', this.dataToSend);
 
         },
-        insertImage(){
-            this.dialog = true;
-            EventBus.$emit('sendData', this.dataToSend);
+        async insertImage(){
+            let result = await apiModule.getModule(this.id);
+
+            let res = actionModule.putResourceInModule(result.data.module, 'https://www.noseo.fr/wp-content/uploads/2018/12/URL-Uniform-Resource-Locator.jpg');
+
+            this.generateJson();
 
         },
 // delete object

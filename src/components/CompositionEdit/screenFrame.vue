@@ -84,6 +84,7 @@ export default {
     },
     methods: {
         selectModule(id) {
+            console.log(id);
             EventBus.$emit('provideCurrentModule', id);
 
         },

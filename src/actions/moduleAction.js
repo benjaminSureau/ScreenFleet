@@ -280,6 +280,13 @@ export function addImageToModule(module, imageUrl) {
     return null;
 }
 
+export async function putResourceInModule(module, url) {
+    module.resource = {
+        multimediaLink: url
+    };
+    return await apiModule.putModule(module._id, module);
+}
+
 
 /////////////////////
 // get module data //
@@ -295,7 +302,7 @@ export async function getModuleData(moduleId) {
             } else if (res.data.modules[0].mode === null){
                 data = {id: res.data.modules[0]._id,type: null, number: res.data.modules[0].numberOfSlides, data: null, isParent: false, submodules: []};
 
-            } else if (res.data.modules[0].mode === "VIDEO" || res.data.modules[0].mode === "FLUX_VIDEO" || res.data.modules[0].mode === "PICTURE") {
+            } else if (res.data.modules[0].mode === "PICTURE") {
                 data = {id: res.data.modules[0]._id,type: null, number: res.data.modules[0].numberOfSlides, data: null, isParent: false, submodules: []};
 
             } else {
@@ -331,7 +338,7 @@ export function getSubModulesData(elementId, res) {
             } else if (subElement.mode === null){
                 data.submodules[index] =
                     {id: subElement._id,type: null, number: subElement.numberOfSlides, data: null, isParent: false, submodules: []};
-            }  else if (subElement.mode === "PICTURE"){
+            } else if (subElement.mode === "PICTURE"){
                 data.submodules[index] =
                     {id: subElement._id,type: null, number: subElement.numberOfSlides, data: null, isParent: false, submodules: []};
             } else {
@@ -360,6 +367,9 @@ export function getSecondSubModulesData(elementId, res, first) {
             } else if (subElement.mode === null){
                 data.submodules[first].submodules[index] =
                     {id: subElement._id,type: null, number: subElement.numberOfSlides, data: null, isParent: false, submodules: []};
+            } else if (subElement.mode === "PICTURE"){
+                data.submodules[index] =
+                    {id: subElement._id,type: null, number: subElement.numberOfSlides, data: null, isParent: false, submodules: []};
             } else {
                 data.submodules[first].submodules[index] =
                     {id: subElement._id,type: subElement.mode, number: subElement.numberOfSlides, data: null, isParent: true, submodules: subElement.nextModuleId};
@@ -386,17 +396,13 @@ export function getThirdSubModulesData(elementId, res, first, second) {
             } else if (subElement.mode === null){
                 data.submodules[first].submodules[second].submodules[index] =
                     {id: subElement._id,type: null, number: subElement.numberOfSlides, data: null, isParent: false, submodules: []};
+            } else if (subElement.mode === "PICTURE"){
+                data.submodules[index] =
+                    {id: subElement._id,type: null, number: subElement.numberOfSlides, data: null, isParent: false, submodules: []};
             } else {
                 data.submodules[first].submodules[second].submodules[index] =
                     {id: subElement._id,type: subElement.mode, number: subElement.numberOfSlides, data: null, isParent: true, submodules: subElement.nextModuleId};
             }
         }
     });
-}
-
-export async function putResourceInModule(module, url) {
-    module.resource = {
-        multimediaLink: url
-    };
-    return await apiModule.putModule(module._id, module);
 }
