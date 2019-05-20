@@ -38,7 +38,7 @@ export async function createSplitHorizontally(module) {
 
     let horizontallyModule =
         {
-            _id: "5cdd40a72c2c9e04a8198447"/*module._id*/,
+            _id: module._id,
             type: "MULTI",
             mode: "SPLIT_VIEW",
             numberOfSlides: 0,
@@ -99,7 +99,7 @@ export async function createSplitVertically(module) {
 
     let verticallyModule =
         {
-            _id: "5cdd40a72c2c9e04a8198447"/*module._id*/,
+            _id: module._id,
             type: "MULTI",
             mode: "SPLIT_VIEW",
             numberOfSlides: 0,
@@ -194,7 +194,7 @@ export async function createSplitByFourth(module) {
 
     let verticallyModule =
         {
-            _id: "5cde7098fe08f42e144ed3a7"/*module._id*/,
+            _id: module._id,
             type: "MULTI",
             mode: "SPLIT_VIEW",
             numberOfSlides: 0,
@@ -244,7 +244,7 @@ export async function createSplitSlide(module , nbSlide) {
     let modules = await Promise.all(slideModulePromises);
     let slideModules =
         {
-            _id: "5cde71c1fe08f42e144ed3b4"/*module._id*/,
+            _id: module._id,
             type: "MULTI",
             mode: "SLIDE_VIEW",
             numberOfSlides: nbSlide,
