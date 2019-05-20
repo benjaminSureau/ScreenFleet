@@ -393,3 +393,10 @@ export function getThirdSubModulesData(elementId, res, first, second) {
         }
     });
 }
+
+export async function putResourceInModule(module, url) {
+    module.resource = {
+        multimediaLink: url
+    };
+    return await apiModule.putModule(module._id, module);
+}
