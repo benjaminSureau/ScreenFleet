@@ -188,18 +188,18 @@ export async function createSplitToFourth(id) {
             alert(err);
         });
 
-    let verticallyModule =
+    let moduleFourth =
         {
             _id: id,
             type: "MULTI",
             mode: "SPLIT_VIEW",
             numberOfSlides: 0,
-            splitMode: "VERTICAL",
+            splitMode: "FOURTH",
             resources: null,
             nextModuleId: [firstModuleResult._id, secondModuleResult._id, thirdModuleResult._id, fourthModuleResult._id]
         };
 
-    return await apiModule.putModule(verticallyModule._id, verticallyModule)
+    return await apiModule.putModule(moduleFourth._id, moduleFourth)
         .then((res) => {
             return {
                 mainModule: res.data.module,
