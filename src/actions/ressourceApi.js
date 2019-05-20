@@ -8,21 +8,21 @@ const instance = axios.create({
 });
 
 export function getRessources() {
-    return instance.get('/api/ressources');
+    return instance.get('/api/resources');
 }
 
 export function getRessourceById(id) {
-    return instance.get(`/api/ressources/${id}`);
+    return instance.get(`/api/resources/${id}`);
 }
 
 export function createRessource(data) {
-    return instance.post('/api/ressources', data);
+    return instance.post('/api/resources', data);
 }
 
 export function putRessource(id, data) {
-    return instance.put(`/api/ressources/${id}`, data);
+    return instance.put(`/api/resources/${id}`, data);
 }
 
 export function deleteRessource(id) {
-    return instance.delete(`/api/ressources/${id}`);
+    return instance.delete(`/api/resources/${id}`);
 }

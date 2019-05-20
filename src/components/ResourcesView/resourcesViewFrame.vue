@@ -68,6 +68,8 @@
 
 <script>
 import { EventBus } from '../../Events.js';
+import * as apiCloud from '../../actions/cloudApi'
+import * as apiRessource from '../../actions/ressourceApi'
 
 export default {
     name: 'resourcesViewFrame',
@@ -75,6 +77,7 @@ export default {
         return {
             value: 0,
             url: null,
+            file: '',
             currentView: '',
             imageUrl: '',
             fileName: '',
@@ -96,7 +99,31 @@ export default {
             this.currentView = 'imageUrl';
             this.imageUrl = this.url; // this is an image file that can be sent to server...
         },
-        saveFromLocal(){
+        async saveFromLocal(){
+            this.file = this.$refs.image.files[0];
+            let formData = new FormData();
+            formData.append('file', this.file);
+            let result = await apiCloud.postFile(formData);
+            this.imageUrl = result.data.fileUrl;
+            let resource =
+                {
+                    multimediaLink: this.imageUrl
+                };
+            console.log(resource);
+            apiRessource.createRessource(resource)
+                .then((res) => {
+                    let myResource =
+                        {
+                            name: this.fileName,
+                            file: "",
+                            url: res.data.multimediaLink,
+                            type: "image"
+                        };
+                    EventBus.$emit('addToList', myResource);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
             EventBus.$emit('passLocalImage', [this.localImageName, this.localImageFile, this.localImageUrl]);
         },
         pickFile () {
