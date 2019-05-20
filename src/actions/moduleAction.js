@@ -279,3 +279,103 @@ export function addVideoToModule(module, videoUrl) {
 export function addImageToModule(module, imageUrl) {
     return null;
 }
+
+
+/////////////////////
+// get module data //
+/////////////////////
+let data = null;
+
+export async function getModuleData(moduleId) {
+    data = null;
+    return await apiModule.getModules(moduleId)
+        .then((res) => {
+            //console.log("testaaaaaa");
+            //console.log(res);
+            if (res.data.modules[0].mode === "SPLIT_VIEW"){
+                data = {id: res.data.modules[0]._id,type: res.data.modules[0].mode.concat('', res.data.modules[0].splitMode), number: res.data.modules[0].numberOfSlides, data: null, isParent: true, submodules: res.data.modules[0].nextModuleId};
+            } else if (res.data.modules[0].mode === null){
+                data = {id: res.data.modules[0]._id,type: null, number: res.data.modules[0].numberOfSlides, data: null, isParent: false, submodules: []};
+
+            } else if (res.data.modules[0].mode === "VIDEO" || res.data.modules[0].mode === "FLUX_VIDEO" || res.data.modules[0].mode === "PICTURE") {
+                data = {id: res.data.modules[0]._id,type: null, number: res.data.modules[0].numberOfSlides, data: null, isParent: false, submodules: []};
+
+            } else {
+                data = {id: res.data.modules[0]._id,type: res.data.modules[0].mode, number: res.data.modules[0].numberOfSlides, data: null, isParent: true, submodules: res.data.modules[0].nextModuleId};
+            }
+
+            if (res.data.modules[0].nextModuleId && res.data.modules[0].nextModuleId.length) {
+
+                res.data.modules[0].nextModuleId.forEach(function(element) {
+                    //console.log(element);
+                    getSubModulesData(element, res);
+
+                });
+            }
+
+            console.log(data);
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+            return null;
+
+        });
+}
+
+export function getSubModulesData(elementId, res) {
+    //console.log(data);
+    let index = data.submodules.indexOf(elementId);
+    //console.log("tesnnnnnnnnnnnn");
+
+    //console.log(res);
+    //console.log(res.data.modules);
+
+    res.data.modules.forEach(function(subElement) {
+        if (subElement._id === elementId){
+            //console.log(subElement);
+            if (subElement.mode === "SPLIT_VIEW"){
+                data.submodules[index] =
+                    {id: subElement._id,type: subElement.mode.concat('', subElement.splitMode), number: subElement.numberOfSlides, data: null, isParent: true, submodules: subElement.nextModuleId};
+            } else if (subElement.mode === null){
+                data.submodules[index] =
+                    {id: subElement._id,type: null, number: subElement.numberOfSlides, data: null, isParent: false, submodules: []};
+            } else {
+                data.submodules[index] =
+                    {id: subElement._id,type: subElement.mode, number: subElement.numberOfSlides, data: null, isParent: true, submodules: subElement.nextModuleId};
+            }
+            if (subElement.nextModuleId && subElement.nextModuleId.length) {
+
+                subElement.nextModuleId.forEach(function (element) {
+                    getSecondSubModulesData(element, res, index);
+
+                });
+            }
+        }
+    });
+}
+
+export function getSecondSubModulesData(elementId, res, first) {
+    //console.log(data);
+    let index = data.submodules[first].submodules.indexOf(elementId);
+    console.log("testdddzzzzzzzz");
+
+    //console.log(res);
+    //console.log(res.data.modules);
+
+    res.data.modules.forEach(function(subElement) {
+        if (subElement._id === elementId){
+            //console.log(subElement);
+            if (subElement.mode === "SPLIT_VIEW"){
+                data.submodules[first].submodules[index] =
+                    {id: subElement._id,type: subElement.mode.concat('', subElement.splitMode), number: subElement.numberOfSlides, data: null, isParent: true, submodules: subElement.nextModuleId};
+            } else if (subElement.mode === null){
+                data.submodules[first].submodules[index] =
+                    {id: subElement._id,type: null, number: subElement.numberOfSlides, data: null, isParent: false, submodules: []};
+            } else {
+                data.submodules[first].submodules[index] =
+                    {id: subElement._id,type: subElement.mode, number: subElement.numberOfSlides, data: null, isParent: true, submodules: subElement.nextModuleId};
+            }
+        }
+    });
+}
