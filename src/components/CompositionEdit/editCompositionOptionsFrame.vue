@@ -130,7 +130,7 @@
 
 <script>
 import * as apiCompo from '../../actions/compositionApi'
-import * as apiModule from '../../actions/moduleApi'
+import * as actionModule from '../../actions/moduleAction'
 import { EventBus } from '../../Events.js';
 
 let tvCounter = 4;
@@ -182,55 +182,23 @@ export default {
     methods: {
 
 // module creation
-        splitHorizontally(){
-            this.currentLenth = this.currentData.length;
-            console.log(this.currentLenth);
-            /*this.dataToSend.forEach(function(item, index) {
-                console.log(item, index);
-            });*/
-            /*this.dataToSend = {id: 'a1',type: 'SplitHoriz', number: null, data: null, isParent: true, submodules: [
-                {id: 'a11',type: 'SplitVert', number: null, data: null, isParent: true, submodules: [
-                        {id: 'a111',type: null, number: null, data: null, isParent: false, submodules: []},
-                        {id: 'a112',type: null, number: null, data: null, isParent: false, submodules: []},
-                    ]},
-                {id: 'a12',type: null, number: null, data: null, isParent: false, submodules: []},
-                ]};*/
-
+        async splitHorizontally(){
+            let res = actionModule.createSplitHorizontally(this.id);
             EventBus.$emit('sendData', this.dataToSend);
 
         },
-        splitVertically(){
-            /*this.dataToSend = {id: 'a1',type: 'SplitVert', number: null, data: null, isParent: true, submodules: [
-                    {id: 'a11',type: 'SplitHoriz', number: null, data: null, isParent: false, submodules: [
-                            {id: 'a111',type: null, number: null, data: null, isParent: false, submodules: []},
-                            {id: 'a112',type: null, number: null, data: null, isParent: false, submodules: []},
-                        ]},
-                    {id: 'a12',type: null, number: null, data: null, isParent: false, submodules: []},
-                ]};*/
-
-
+        async splitVertically(){
+            let res = actionModule.createSplitVertically(this.id);
             EventBus.$emit('sendData', this.dataToSend);
 
         },
-        splitToFourth(){
-
-            /*this.dataToSend = {id: 'a11',type: 'SplitFour', number: null, data: null, isParent: true, submodules: [
-                    {id: 'a11',type: 'image', number: null, data: 'https://cdn.pixabay.com/photo/2016/09/01/10/23/image-1635747_960_720.jpg', isParent: false, submodules: []},
-                    {id: 'a12',type: null, number: null, data: 'https://youtu.be/yILg7NTUfCQ', isParent: false, submodules: []},
-                    {id: 'a13',type: null, number: null, data: null, isParent: false, submodules: []},
-                    {id: 'a14',type: null, number: null, data: null, isParent: false, submodules: []},
-                ]};*/
-
+        async splitToFourth(){
+            let res = actionModule.createSplitToFourth(this.id);
             EventBus.$emit('sendData', this.dataToSend);
 
         },
-        insertSlide(){
-            /*this.dataToSend = {id: 'a11',type: 'Slide', number: 4, data: null, isParent: true, submodules: [
-                    {id: 'a11',type: 'image', number: null, data: 'https://cdn.pixabay.com/photo/2016/09/01/10/23/image-1635747_960_720.jpg', isParent: false, submodules: []},
-                    {id: 'a12',type: null, number: null, data: '', isParent: false, submodules: []},
-                    {id: 'a13',type: null, number: null, data: '', isParent: false, submodules: []},
-                    {id: 'a14',type: null, number: null, data: '', isParent: false, submodules: []},
-                ]};*/
+        async insertSlide(){
+            let res = actionModule.createSplitSlide(this.id);
             EventBus.$emit('sendData', this.dataToSend);
 
         },
