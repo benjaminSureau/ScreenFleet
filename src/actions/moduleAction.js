@@ -1,6 +1,6 @@
 import * as apiModule from '../actions/moduleApi'
 
-export async function createSplitHorizontally(module) {
+export async function createSplitHorizontally(id) {
     console.log('test');
     let firstModuleResult = await apiModule.createModule(
         {
@@ -38,7 +38,7 @@ export async function createSplitHorizontally(module) {
 
     let horizontallyModule =
         {
-            _id: module._id,
+            _id: id,
             type: "MULTI",
             mode: "SPLIT_VIEW",
             numberOfSlides: 0,
@@ -49,8 +49,6 @@ export async function createSplitHorizontally(module) {
 
     return await apiModule.putModule(horizontallyModule._id, horizontallyModule)
         .then((res) => {
-            console.log('======');
-            console.log(res);
             return {
                 mainModule: res.data.module,
                 firstModuleResult,
@@ -62,7 +60,7 @@ export async function createSplitHorizontally(module) {
         });
 }
 
-export async function createSplitVertically(module) {
+export async function createSplitVertically(id) {
     let firstModuleResult = await apiModule.createModule(
         {
             type: "BASE",
@@ -99,7 +97,7 @@ export async function createSplitVertically(module) {
 
     let verticallyModule =
         {
-            _id: module._id,
+            _id: id,
             type: "MULTI",
             mode: "SPLIT_VIEW",
             numberOfSlides: 0,
@@ -110,8 +108,6 @@ export async function createSplitVertically(module) {
 
     return await apiModule.putModule(verticallyModule._id, verticallyModule)
         .then((res) => {
-            console.log('======');
-            console.log(res);
             return {
                 mainModule: res.data.module,
                 firstModuleResult,
@@ -123,7 +119,7 @@ export async function createSplitVertically(module) {
         });
 }
 
-export async function createSplitByFourth(module) {
+export async function createSplitToFourth(id) {
     let firstModuleResult = await apiModule.createModule(
         {
             type: "BASE",
@@ -194,7 +190,7 @@ export async function createSplitByFourth(module) {
 
     let verticallyModule =
         {
-            _id: module._id,
+            _id: id,
             type: "MULTI",
             mode: "SPLIT_VIEW",
             numberOfSlides: 0,
@@ -205,8 +201,6 @@ export async function createSplitByFourth(module) {
 
     return await apiModule.putModule(verticallyModule._id, verticallyModule)
         .then((res) => {
-            console.log('======');
-            console.log(res);
             return {
                 mainModule: res.data.module,
                 firstModuleResult,
