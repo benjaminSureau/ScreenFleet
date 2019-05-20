@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import MenuBar from './menuBar.vue'
+    import MenuBar from '../menuBar.vue'
     import EditCompositionViewFrame from "./editCompositionViewFrame";
     import EditCompositionOptionFrame from "./editCompositionOptionsFrame";
 

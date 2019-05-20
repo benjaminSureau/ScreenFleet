@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import MainFrame from '@/components/mainFrame';
-import EditComposition from '@/components/compositionEditFrame';
+import EditComposition from '@/components/CompositionEdit/compositionEditFrame';
 import ResourcesView from '@/components/ResourcesView/resourcesMainFrame';
 import TvView from '@/components/screen';
 
