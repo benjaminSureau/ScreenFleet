@@ -130,6 +130,7 @@
 
 <script>
 import * as apiCompo from '../../actions/compositionApi'
+import * as apiModule from '../../actions/moduleApi'
 import * as actionModule from '../../actions/moduleAction'
 import { EventBus } from '../../Events.js';
 
@@ -149,8 +150,8 @@ export default {
             currentData: 'a1',
             currentLenth: 0,
             count: 0,
-            dialog: false
-
+            dialog: false,
+            firstModuleUrl: null
 
         };
     },
@@ -159,13 +160,10 @@ export default {
         EventBus.$emit('sendData', this.dataToSend);
 
 
-        apiCompo.getCompositions(this.$route.params.id)
+        apiCompo.getCompositionById(this.$route.params.id)
             .then((res) => {
                 this.composition = res.data.composition;
-                console.log(this.composition);
-                //console.log(this.composition.moduleId);
-
-
+                this.firstModuleUrl = this.composition.moduleId;
             })
             .catch((err) => {
                 alert(err);
@@ -173,10 +171,14 @@ export default {
 
         EventBus.$on('provideCurrentModule', data => {
             this.currentData = data;
-            console.log(this.currentData);
+            //console.log(this.currentData);
 
         });
-    },
+        console.log("zddzddzd");
+        this.generateJson();
+
+
+        },
     computed: {
     },
     methods: {
@@ -222,6 +224,12 @@ export default {
 
         deleteContent(id,type){
 
+        },
+        async generateJson(){
+            let result = await actionModule.getModuleData(this.firstModuleUrl);
+            console.log(result);
+            this.dataToSend = result;
+            EventBus.$emit('sendData', this.dataToSend);
         }
     }
 };

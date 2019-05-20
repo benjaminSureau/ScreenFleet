@@ -1,25 +1,25 @@
 <template>
     <div style="height: 100%;width: 100%" :key="dataFromParent.id" v-on:click="!dataFromParent.isParent ? selectModule(dataFromParent.id) : nothing()">
 
-        <div v-if="dataFromParent.type === 'SplitHoriz'" style="height: 100%; width: 100%; display:inline-block">
+        <div v-if="dataFromParent.type === 'SPLIT_VIEWHORIZONTAL'" style="height: 100%; width: 100%; display:inline-block">
             <div v-for="resource in dataFromParent.submodules" :key="resource.id" style="height: 50%; width: 100%; display:inline-block">
                 <screen-frame :data-from-parent="resource"></screen-frame>
             </div>
         </div>
 
-        <div v-if="dataFromParent.type === 'SplitVert'" style="height: 100%; width: 100%; display:inline-block">
+        <div v-if="dataFromParent.type === 'SPLIT_VIEWVERTICAL'" style="height: 100%; width: 100%; display:inline-block">
             <div v-for="resource in dataFromParent.submodules" style="height: 100%; width: 50%; display:inline-block">
                 <screen-frame :data-from-parent="resource"></screen-frame>
             </div>
         </div>
 
-        <div v-if="dataFromParent.type === 'SplitFour'" style="height: 100%; width: 100%; display:inline-block">
+        <div v-if="dataFromParent.type === 'SPLIT_VIEWFOURTH'" style="height: 100%; width: 100%; display:inline-block">
             <div v-for="resource in dataFromParent.submodules" style="height: 50%; width: 50%; display:inline-block">
                 <screen-frame :data-from-parent="resource"></screen-frame>
             </div>
         </div>
 
-        <div v-if="dataFromParent.type === 'Slide'" style="height: 100%; width: 100%; display:inline-block">
+        <div v-if="dataFromParent.type === 'SLIDE_VIEW'" style="height: 100%; width: 100%; display:inline-block">
             <v-carousel hide-controls height="100%" width="100%">
                 <v-carousel-item
                     v-for="resource in dataFromParent.submodules"
@@ -31,11 +31,17 @@
             </v-carousel>
         </div>
 
-        <div v-if="dataFromParent.type === 'image'" style="height: 100%; width: 100%; display:inline-block">
+        <div v-if="dataFromParent.type === 'PICTURE'" style="height: 100%; width: 100%; display:inline-block">
             <img :src="dataFromParent.data" style="max-height: 100%; max-width: 100%"/>
         </div>
 
-        <div v-if="dataFromParent.type === 'video'" style="height: 100%; width: 100%; display:inline-block">
+        <div v-if="dataFromParent.type === 'VIDEO'" style="height: 100%; width: 100%; display:inline-block">
+            <video :autoplay="true" :loop="true">
+                <source :src="dataFromParent.data" type="video/mp4"/>
+            </video>
+        </div>
+
+        <div v-if="dataFromParent.type === 'FLUX_VIDEO'" style="height: 100%; width: 100%; display:inline-block">
             <video :autoplay="true" :loop="true">
                 <source :src="dataFromParent.data" type="video/mp4"/>
             </video>

@@ -23,7 +23,6 @@ export default {
             dataSend: [],
             v5cdc0fe0943dbc31545d1ed9: null,
             items: [],
-            dialog: false
         }
     },
     mounted() {
