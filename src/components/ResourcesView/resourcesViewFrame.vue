@@ -68,6 +68,8 @@
 
 <script>
 import { EventBus } from '../../Events.js';
+import * as apiCloud from '../../actions/cloudApi'
+import * as apiRessource from '../../actions/ressourceApi'
 
 export default {
     name: 'resourcesViewFrame',
@@ -75,6 +77,7 @@ export default {
         return {
             value: 0,
             url: null,
+            file: '',
             currentView: '',
             imageUrl: '',
             fileName: '',
@@ -82,22 +85,70 @@ export default {
         }
     },
     mounted() {
-
+    EventBus.$on('previewFile', (url) => {
+        this.currentView = 'imageUrl';
+        this.imageUrl = url;
+    });
     },
     components: {
     },
     computed: {
     },
     methods: {
-        saveUrl(){
+        async saveUrl(){
+            this.file = this.$refs.image.files[0];
+            let formData = new FormData();
+            formData.append('file', this.file);
+            let result = await apiCloud.postFile(formData);
+            this.imageUrl = result.data.fileUrl;
+            let resource =
+                {
+                    multimediaLink: this.url
+                };
+            apiRessource.createRessource(resource)
+                .then((res) => {
+                    let myResource =
+                        {
+                            name: res.data.multimediaLink,
+                            file: "",
+                            url: res.data.multimediaLink,
+                            type: "image"
+                        };
+                    EventBus.$emit('addToList', myResource);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
             EventBus.$emit('passUrl', this.url);
         },
         previewFile(){
             this.currentView = 'imageUrl';
             this.imageUrl = this.url; // this is an image file that can be sent to server...
         },
-        saveFromLocal(){
-            EventBus.$emit('passLocalImage', [this.localImageName, this.localImageFile, this.localImageUrl]);
+        async saveFromLocal(){
+            this.file = this.$refs.image.files[0];
+            let formData = new FormData();
+            formData.append('file', this.file);
+            let result = await apiCloud.postFile(formData);
+            this.imageUrl = result.data.fileUrl;
+            let resource =
+                {
+                    multimediaLink: this.imageUrl
+                };
+            apiRessource.createRessource(resource)
+                .then((res) => {
+                    let myResource =
+                        {
+                            name: res.data.multimediaLink,
+                            file: "",
+                            url: res.data.multimediaLink,
+                            type: "image"
+                        };
+                    EventBus.$emit('addToList', myResource);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
         pickFile () {
             this.$refs.image.click();

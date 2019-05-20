@@ -22,8 +22,6 @@
 import * as apiResource from '../../actions/ressourceApi'
 import { EventBus } from '../../Events.js';
 
-let tvCounter = 4;
-
 export default {
     name: 'resourcesListFrame',
     components: {
@@ -32,38 +30,32 @@ export default {
     data() {
         return {
             id: null,
-            items: [
-                {name: "squirrel", file : "", url :'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'},
-                {name: "sky", file : "", url :'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'},
-                {name: "bird", file : "", url :'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'},
-                {name: "planet", file : "", url :'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'}
-            ]
+            items: []
 
         };
     },
-    mounted() {
-        EventBus.$on('passUrl', data => {
-            this.addImageUrlToList(data);
-        });
-        EventBus.$on('passLocalImage', data => {
+    async mounted() {
+
+        let res = await apiResource.getRessources();
+        for(const resource of res.data.resources) {
+            await this.items.push({
+                name: resource.multimediaLink.small(),
+                file: "",
+                url: resource.multimediaLink
+            });
+        }
+        EventBus.$on('addToList', data => {
             this.addImageFromLocal(data);
         });
-
     },
     computed: {
     },
     methods: {
-        getAllResources(){
-            //todo...
-        },
-        addImageUrlToList(data){
-            //todo...
-        },
         addImageFromLocal(data){
-            //todo...
+            this.items.push(data);
         },
         showImage(image) {
-            //todo...
+            EventBus.$emit('previewFile', image.url);
         }
 
     }
